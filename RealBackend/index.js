@@ -55,8 +55,13 @@ app.use('/',  userRouter);
 const packageRouter = require('./routes/package');
 app.use('/', packageRouter);
 
+const vehicleRouter = require('./routes/vehicles');
+app.use('/', vehicleRouter);
 // const updateUserRouter = require('./routes/updateUser');
 // app.use('/updateUser', updateUserRouter);
+const hotelRouter = require('./routes/hotels');
+app.use('/', hotelRouter);
+
 
 const managerRouter = require('./routes/managers');
 app.use('/manager', managerRouter);

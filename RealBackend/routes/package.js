@@ -14,16 +14,16 @@ router.get('/packages', async (req, res) => {
     }
 });
 
-router.get('/:city', async (req, res) => {
-    try {
-        const city = req.params.city;
-        const queryText = 'SELECT city, description, total_cost, image FROM packages WHERE city = ?';
-        const [result] = await db.execute(queryText, [city]);
-        res.send(utils.createResult(result));
-    } catch (error) {
-        res.send(utils.createError(error));
-    }
-});
+// router.get('/:city', async (req, res) => {
+//     try {
+//         const city = req.params.city;
+//         const queryText = 'SELECT city, description, total_cost, image FROM packages WHERE city = ?';
+//         const [result] = await db.execute(queryText, [city]);
+//         res.send(utils.createResult(result));
+//     } catch (error) {
+//         res.send(utils.createError(error));
+//     }
+// });
 
 //do we really need this ?
 // router.get('/sort/:order', async (req, res) => {
@@ -36,27 +36,27 @@ router.get('/:city', async (req, res) => {
 //         res.send(utils.createError(error));
 //     }
 // });
-router.get('/vehicles/details', async (req, res) => {
-    try {
-        const queryText = 'SELECT * FROM vehicle';
-        const [result] = await db.execute(queryText, []);
-        res.send(utils.createResult(result));
-        console.log(result)
-    } catch (error) {
-        res.send(utils.createError(error));
-    }
-});
+// router.get('/vehicles/details', async (req, res) => {
+//     try {
+//         const queryText = 'SELECT * FROM vehicle';
+//         const [result] = await db.execute(queryText, []);
+//         res.send(utils.createResult(result));
+//         console.log(result)
+//     } catch (error) {
+//         res.send(utils.createError(error));
+//     }
+// });
 
 
-router.get('/vehicles', async (req, res) => {
-    try {
-        const queryText = 'SELECT type from vehicle ';
-        const [result] = await db.execute(queryText,[]);
-        console.log(result)
-        res.send(utils.createResult(result));
-    } catch (error) {
-        res.send(utils.createError(error));
-    }
-});
+// router.get('/vehicles', async (req, res) => {
+//     try {
+//         const queryText = 'SELECT type from vehicle ';
+//         const [result] = await db.execute(queryText,[]);
+//         console.log(result)
+//         res.send(utils.createResult(result));
+//     } catch (error) {
+//         res.send(utils.createError(error));
+//     }
+// });
 
 module.exports = router;
