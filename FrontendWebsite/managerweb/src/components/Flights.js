@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 
-const Hotels = () => {
-    const [hotels, setHotels] = useState([]);
+const Flights = () => {
+    const [Flights, setFlights] = useState([]);
     const token = sessionStorage.getItem('token');
     console.log(token);
 
@@ -11,12 +11,12 @@ const Hotels = () => {
     useEffect(() => {
         console.log("object")
         
-            axios.get('http://localhost:4000/hotels', {headers: {
+            axios.get('http://localhost:4000/vehicles/typeAirplane', {headers: {
                 token
             }})
             .then(result => {
                 debugger
-                setHotels(result.data.data);
+                setFlights(result.data.data);
               
                       
                  console.log("result is ",result.data.data);
@@ -31,21 +31,20 @@ const Hotels = () => {
             <h1>hotels</h1>
             
                 <div className="package-container">
-                    {hotels.length > 0 ? (
-                        hotels.map(pkg => (
-                            <div key={pkg.hotel_id} className='box'>
+                    {Flights.length > 0 ? (
+                        Flights.map(flight => (
+                            <div key={flight.vehicle_id} className='box'>
                                   <div >
                             <img 
-                                src={"http://localhost:4000/"+pkg.image} 
-                                alt={pkg.city} 
+                                src={"http://localhost:4000/"+flight.image} 
+                                alt={flight.name} 
                                 className='image'/>
                             </div>
-                                <h2>{pkg.cost}</h2>
-                                <p>{pkg.reviews}</p>
+                              
                             </div>
                         ))
                     ) : (
-                        <p>No hotels available</p>
+                        <p>No flights available</p>
                     )}
                 </div>
 
@@ -55,4 +54,4 @@ const Hotels = () => {
     
     
 };
-export default Hotels;
+export default Flights;

@@ -1,6 +1,8 @@
 import Vehicles from './vehicles';
 import Packages from './packages';
 import Hotels from './hotels';
+// import NavBar2 from './NavBar2';
+
 
 const HomePage = () => {
 const token=sessionStorage.getItem('token');
@@ -8,11 +10,11 @@ const token=sessionStorage.getItem('token');
 
     return (
         <div>
-            <Packages></Packages>
-            <hr></hr>
-            <Hotels></Hotels>
-            <hr></hr>
-            <Vehicles></Vehicles>
+         
+{/* <p>home page </p> */}
+<Packages></Packages>
+<Vehicles></Vehicles>
+<Hotels></Hotels>
         </div>
     );
     

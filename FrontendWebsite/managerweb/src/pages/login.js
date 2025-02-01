@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 // import 
 import { Link, useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 // import { useNavigation } from 'react-router-dom';
 const Login = () => {
 
@@ -21,7 +21,7 @@ const navigate = useNavigate();
         .then(response => {
             
             if (response.data.status === 'success') {
-            // toast.success('Login successful!');
+             toast.success('Login successful!');
             console.log('Login successful:', response.data);
             // navigation.navigate('HomePage');
             sessionStorage.setItem('token', response.data.data.token);

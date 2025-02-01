@@ -31,7 +31,7 @@ const Packages = () => {
     },[]);
 
     const AddPackage = () => {
-        navigate('/addPackage');
+        navigate('/addPackages');
     }
 
     return (

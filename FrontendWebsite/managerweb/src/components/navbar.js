@@ -23,6 +23,7 @@ const navigate = useNavigate();
 </nav>
 
         </div>
+        
     )
 }
 export default Navbar;

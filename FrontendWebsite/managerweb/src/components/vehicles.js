@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-
+// import 
 
 const Vehicles = () => {
     const [vehicles, setVehicles] = useState([]);
@@ -11,7 +11,7 @@ const Vehicles = () => {
     useEffect(() => {
         console.log("object")
         
-            axios.get('http://localhost:4000/manager/vehicles', {headers: {
+            axios.get('http://localhost:4000/vehicles', {headers: {
                 token
             }})
             .then(result => {
@@ -50,21 +50,3 @@ const Vehicles = () => {
     
 };
 export default Vehicles;
-{/* <style>
-                    .package-container {
-                        display: flex;
-                        overflow-x: auto;
-                        gap: 20px;
-                    }
-                    .package {
-                        min-width: 300px;
-                        border: 1px solid #ccc;
-                        border-radius: 10px;
-                        padding: 20px;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    }
-                    .package img {
-                        max-width: 100%;
-                        border-radius: 10px;
-                    }
-                </style> */}
