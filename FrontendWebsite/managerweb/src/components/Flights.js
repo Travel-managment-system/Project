@@ -28,19 +28,14 @@ const Flights = () => {
     return (
         <div className='container'>
             
-            <h1>hotels</h1>
+            <h1>Available flights</h1>
             
                 <div className="package-container">
                     {Flights.length > 0 ? (
                         Flights.map(flight => (
                             <div key={flight.vehicle_id} className='box'>
-                                  <div >
-                            <img 
-                                src={"http://localhost:4000/"+flight.image} 
-                                alt={flight.name} 
-                                className='image'/>
-                            </div>
-                              
+                                <h2>{flight.name}</h2>
+                                <h6>cost:{flight.cost}</h6>
                             </div>
                         ))
                     ) : (

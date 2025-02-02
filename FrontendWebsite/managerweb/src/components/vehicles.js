@@ -26,7 +26,7 @@ const Vehicles = () => {
          
     },[]);
     return (
-        <div>
+        <div className='container'>
             <h1>vehicles</h1>
             <div >
                 <div className="package-container">

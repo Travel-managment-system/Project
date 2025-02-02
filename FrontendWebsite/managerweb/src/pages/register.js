@@ -9,13 +9,13 @@ function Register() {
     const navigate = useNavigate();
         const [firstName, setFirstName] = useState('');
         const [lastName, setLastName] = useState('');
- const [gmail, setGmail] = useState('');
+ const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
    
     const handleRegister = async () => {
 //    if (password !== confirmPassword) {
-if(firstName==='' || lastName==='' || gmail==='' || password==='' || confirmPassword===''){
+if(firstName==='' || lastName==='' || email==='' || password==='' || confirmPassword===''){
         toast.error('All fields are required');     }
         else if(password !== confirmPassword){
             toast.warn('Password does not match');
@@ -23,7 +23,7 @@ if(firstName==='' || lastName==='' || gmail==='' || password==='' || confirmPass
         // debugger
         else{
         //     console.log("hello")
-        const result = await register(firstName, lastName, gmail, password);
+        const result = await register(firstName, lastName, email, password);
         // debugger
         console.log(result);
         if (result.status === 'success') {
@@ -71,13 +71,13 @@ if(firstName==='' || lastName==='' || gmail==='' || password==='' || confirmPass
                                 </div>
                                 
                                 <div className="form-group">
-                                    <label htmlFor="gmail">gmail address</label>
+                                    <label htmlFor="email">email address</label>
                                     <input
-                                        type="gmail"
+                                        type="email"
                                         className="form-control"
-                                        id="gmail"
-                                        value={gmail}
-                                        onChange={(e) => setGmail(e.target.value)}
+                                        id="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
                                 </div>

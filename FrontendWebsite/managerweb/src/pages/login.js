@@ -15,7 +15,7 @@ const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:4000/login', {
-            gmail: email,
+            email: email,
             password: password
         })
         .then(response => {

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from './navbar';
 import Skeleton from './skeleton';
 import { useNavigate } from 'react-router-dom';
-
 
 const Packages = () => {
     const [packages, setPackages] = useState([]);
@@ -31,20 +29,13 @@ const Packages = () => {
     },[]);
 
     const AddPackage = () => {
-        navigate('/addPackages');
+        navigate('/addPackage');
     }
-
     return (
         <div className='container'>
-            <Navbar/>
+          
             <h1>Home Page</h1>
-           {/* {  role== 'User' ? (
-                <div>
-                    <button className='btn btn-primary'>Add Package</button>
-                </div>  
-            ) : (<div>
-                 kuch nhi 
-            </div>) */}
+
  {role==='manager' &&<button className='btn btn-primary' onClick={AddPackage}>Add Package</button>}
                 <div className="package-container">
                     {packages.length > 0 ? (
