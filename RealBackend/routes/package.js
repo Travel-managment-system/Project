@@ -25,6 +25,40 @@ router.get('/packages', async (req, res) => {
 //     }
 // });
 
+// const express = require('express');
+// const router = express.Router();
+// const db = require('../db');
+// const utils = require('../utils');
+
+// // See all packages with pagination
+// router.get('/packages', async (req, res) => {
+//     try {
+//         const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+//         const limit = parseInt(req.query.limit) || 5; // Default to 5 items per page if not provided
+//         const startIndex = (page - 1) * limit;
+
+//         const queryText = 'SELECT * FROM packages LIMIT ?, ?';
+//         const [packages] = await db.execute(queryText, [startIndex, limit]);
+
+//         // Get the total count of packages
+//         const countQuery = 'SELECT COUNT(*) as count FROM packages';
+//         const [countResult] = await db.execute(countQuery);
+//         const totalCount = countResult[0].count;
+//         const totalPages = Math.ceil(totalCount / limit);
+
+//         res.send(utils.createSuccess({
+//             data: packages,
+//             currentPage: page,
+//             totalPages: totalPages
+//         }));
+//     } catch (err) {
+//         res.send(utils.createError(err));
+//     }
+// });
+
+
+
+
 //do we really need this ?
 // router.get('/sort/:order', async (req, res) => {
 //     try {
