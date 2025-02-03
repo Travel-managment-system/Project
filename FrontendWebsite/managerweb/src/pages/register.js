@@ -15,6 +15,8 @@ function Register() {
    
     const handleRegister = async () => {
 //    if (password !== confirmPassword) {
+// console.log(firstName,lastName,email,password)
+
 if(firstName==='' || lastName==='' || email==='' || password==='' || confirmPassword===''){
         toast.error('All fields are required');     }
         else if(password !== confirmPassword){
@@ -22,9 +24,9 @@ if(firstName==='' || lastName==='' || email==='' || password==='' || confirmPass
         }
         // debugger
         else{
-        //     console.log("hello")
+            console.log(email)
         const result = await register(firstName, lastName, email, password);
-        // debugger
+        debugger
         console.log(result);
         if (result.status === 'success') {
             toast.success('Registration successful!');
@@ -32,6 +34,7 @@ if(firstName==='' || lastName==='' || email==='' || password==='' || confirmPass
         } else {
             toast.error('Registration failed:', result.message);
         console.log(result.message);
+        console.log(result)
         }    
     }
         

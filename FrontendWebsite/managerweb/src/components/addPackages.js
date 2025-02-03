@@ -1,11 +1,17 @@
 // import { Toast } from "bootstrap";
 // import { registerManager } from "";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createPackage } from "../services/manager";
 
 function AddPackages() {
+    const location = useLocation();
+    const {state} = location
+console.log(state.role)
+if(state.role!=='manager'){
+     navigate('/ErrorPage')
+}
     const navigate = useNavigate();
         const [city, setCity] = useState('');
         const [description, setDescription] = useState('');

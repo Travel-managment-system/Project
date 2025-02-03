@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createURL,createError } from './utils';
-export async function register(firstName, lastName, gmail, password) {
+export async function register(firstName, lastName, email, password) {
     try{
 const url = createURL('register');
 console.log("url",url);
@@ -9,7 +9,7 @@ console.log("url",url);
 const body = {
     firstName,
     lastName,
-    gmail,
+    email,
     password
 }
 

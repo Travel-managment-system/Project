@@ -11,30 +11,39 @@ import React, { useState } from 'react';
 import AddPackages from "./components/addPackages";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ErrorPage from "./pages/ErrorPage";
+import { AuthProvider } from "./AppContext/AuthContext";
 // import Navbar from "./components/navbar";
 function App() {
 
 
-  return (<><Routes>
+  return (<>
+  <AuthProvider>
+  <Routes>
               <Route index element={<Login/>} />
             <Route  path="/" element={<Login></Login>} />  
-            <Route path="/register" element={<Register/>}/>    
-            <Route  path="/home" element={<HomePage></HomePage>} />
+            <Route path="/register" element={<Register/>}/> 
+
+
+            {/* <ProtectedRoute></ProtectedRoute>    */}
+            <Route  path="/home" element={
+              <ProtectedRoute>
+              <HomePage></HomePage>
+              </ProtectedRoute>
+            } />
             <Route 
-          path="/addPackage" 
+          path="/create-packages" 
           element={
             <ProtectedRoute>
               <AddPackages />
             </ProtectedRoute>
           } 
         />
-        <Route path="/error" element={<ErrorPage />} />
+<Route path="/error" element={<ErrorPage />} />
+        <Route path="*" element={<ErrorPage />} />
+   
             </Routes>
             <ToastContainer/>
-            <div>
-      {/* <NavBar2 setActivePage={setActivePage} /> */}
- {/* {renderContent()} */}
-    </div>
+            </AuthProvider>
             </>
             
   );

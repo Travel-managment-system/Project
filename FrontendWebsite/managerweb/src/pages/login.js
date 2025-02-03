@@ -23,10 +23,13 @@ const navigate = useNavigate();
             if (response.data.status === 'success') {
              toast.success('Login successful!');
             console.log('Login successful:', response.data);
+            debugger
             // navigation.navigate('HomePage');
             sessionStorage.setItem('token', response.data.data.token);
-            sessionStorage.setItem('role', response.data.data.role);
-            navigate('/home');
+            // sessionStorage.setItem('role', response.data.data.role);
+            const role={role:response.data.data.role}
+            console.log(role)
+            navigate('/home',{state:role});
 
             } else {
             // Handle login failure
@@ -39,8 +42,8 @@ const navigate = useNavigate();
             console.error('Error:', error);
         });
        
-        console.log('Email:', email);
-        console.log('Password:', password);
+        // console.log('Email:', email);
+        // console.log('Password:', password);
     };
 
     return (

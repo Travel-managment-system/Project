@@ -16,7 +16,9 @@ const NavBar2 = ({ setActivePage }) => {
       <button onClick={() => setActivePage('Flights')}>Flights</button>
       <button onClick={() => setActivePage('Stays')}>Stays</button>
       <button onClick={() => setActivePage('Vehicles')}>Vehicles</button>
+    <button onClick={()=> navigate('/profile')}>profile</button>
       <button onClick={logoutsession}>Logout</button>
+    
     </nav>
 
 

@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+// import Navbar from './navbar';
 import Skeleton from './skeleton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 const Packages = () => {
+    const location = useLocation();
+    const {state}=location;
+
+
     const [packages, setPackages] = useState([]);
     const token = sessionStorage.getItem('token');
-    const role = sessionStorage.getItem('role');
+    // const role = sessionStorage.getItem('role');
     const navigate = useNavigate();
-    console.log(token,role);
-
+    console.log(token);
+    // debugger
+console.log(state)
     useEffect(() => {
         console.log("object")
         
@@ -17,7 +24,7 @@ const Packages = () => {
                 token
             }})
             .then(result => {
-                debugger
+                // debugger
                 setPackages(result.data.data);
               
                       
@@ -29,14 +36,21 @@ const Packages = () => {
     },[]);
 
     const AddPackage = () => {
-        navigate('/addPackage');
+        navigate('/create-packages',{state});
     }
+
     return (
         <div className='container'>
-          
+            {/* <Navbar/> */}
             <h1>Home Page</h1>
-
- {role==='manager' &&<button className='btn btn-primary' onClick={AddPackage}>Add Package</button>}
+           {/* {  role== 'User' ? (
+                <div>
+                    <button className='btn btn-primary'>Add Package</button>
+                </div>  
+            ) : (<div>
+                 kuch nhi 
+            </div>) */}
+ {state.role==='manager' &&<button className='btn btn-primary' onClick={AddPackage}>Add Package</button>}
                 <div className="package-container">
                     {packages.length > 0 ? (
                         packages.map(pkg => (
