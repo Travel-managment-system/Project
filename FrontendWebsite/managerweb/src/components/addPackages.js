@@ -111,6 +111,11 @@ const Onsubmit = async (e) => {
                                     type="submit" className="btn btn-primary mt-3">
                                     Register
                                 </button>
+                                <button 
+                                    onClick={()=>navigate('/home',{state})}
+                                    type="submit" className="btn btn-danger mt-3">
+                                    Cancel
+                                </button>
   
                         </div>
                     </div>
