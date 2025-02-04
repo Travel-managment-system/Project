@@ -5,6 +5,7 @@ const utils = require('../utils');
 const cryptoJs = require('crypto-js');
 const jwt = require('jsonwebtoken');
 const config = require('../config')
+const authenticateToken = require('../authenticateToken');
 
 
 
@@ -44,20 +45,6 @@ try{
             SELECT user_id,first_name,last_name,role FROM user 
                 WHERE   
                 email = ? AND password = ? and status='active'`;
-    
-//     // const users = await db.query(queryText, [email, encryptedPassword]);
-//     const users = await db.query(queryText, [email, encryptedPassword]);
-//             res.send(
-//               utils.createSuccess({
-//                   users})
-//           );
-//           }
-      
-//   catch(err){
-//       res.send(utils.createError(err));
-//   }
-    //above is not a way to use this instead use this [users]
-
     const [users] = await db.query(queryText, [email, encryptedPassword]);
   if(users.length == 0){
 res.send(utils.createError('user dose not exist'));
@@ -73,6 +60,7 @@ res.send(utils.createError('user dose not exist'));
                 token,firstName: user['first_name'],
                 lastName: user['last_name'],
                 role: user['role'],
+                userId: user['user_id']
             })
         );
         }
@@ -97,20 +85,26 @@ try {
 }
 })
 
-router.get('/personal-details/:userId', async (req, res) => {
-    const { userId } = req.params;
+
+
+
+
+
+router.get('/personal-details', authenticateToken, async (req, res) => {
+    const userId = req.user.userId; // Extract the user ID from the token
     try {
-        const queryText = `
-            SELECT first_name, last_name, email, password,mobile_no, dob, aadhar_no,
-    passport_no, marital_status from personal_details,user 
-            WHERE user.user_id=personal_details.user_id and personal_details.user_id = ?`;
-        
-        const [personalDetails] = await db.execute(queryText, [userId]);
-        res.send(utils.createSuccess(personalDetails));
+      const queryText = `
+        SELECT first_name, last_name, email, mobile_no, dob, aadhar_no,
+               passport_no, marital_status 
+        FROM personal_details 
+        WHERE user_id = ?`;
+      const [personalDetails] = await db.execute(queryText, [userId]);
+      res.send(utils.createSuccess(personalDetails));
     } catch (err) {
-        res.send(utils.createError(err));
+      res.send(utils.createError(err.message));
     }
-});
+  });
+  
 module.exports = router;
 
 

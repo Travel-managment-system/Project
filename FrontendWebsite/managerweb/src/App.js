@@ -12,6 +12,7 @@ import AddPackages from "./components/addPackages";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ErrorPage from "./pages/ErrorPage";
 import { AuthProvider } from "./AppContext/AuthContext";
+import Profile from "./components/Profile/Profile";
 // import Navbar from "./components/navbar";
 function App() {
 
@@ -38,6 +39,15 @@ function App() {
             </ProtectedRoute>
           } 
         />
+
+<Route 
+          path="/profile" 
+          element={
+              <Profile />
+          } 
+        />
+
+
 <Route path="/error" element={<ErrorPage />} />
         <Route path="*" element={<ErrorPage />} />
    

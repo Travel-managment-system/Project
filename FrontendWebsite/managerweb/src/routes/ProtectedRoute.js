@@ -1,24 +1,18 @@
-// import React from 'react';
-// import { Navigate } from 'react-router-dom';
-
-// const ProtectedRoute = ({ children }) => {
-//   const role = sessionStorage.getItem('role');
-//   const token = sessionStorage.getItem('token');
-//   if (token==null) return <Navigate to="/" />;
-
-//   return role === 'manager' ? children : <Navigate to="/error" />;
-// };
-
-// export default ProtectedRoute;
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './../AppContext/AuthContext';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, allowedRoles }) => {
   const { auth } = useAuth();
+  const location = useLocation();
+  const role = location.state?.role;
 
   if (!auth) {
     return <Navigate to="/" />;
+  }
+
+  if (allowedRoles && (!role || !allowedRoles.includes(role))) {
+    return <Navigate to="/error" />;
   }
 
   return children;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // import Navbar from './navbar';
-import Skeleton from './skeleton';
+import Skeleton from '../skeleton';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
@@ -15,7 +15,7 @@ const Packages = () => {
     // const role = sessionStorage.getItem('role');
     const navigate = useNavigate();
     console.log(token);
-    // debugger
+    debugger
 console.log(state)
     useEffect(() => {
         console.log("object")
