@@ -1,0 +1,95 @@
+/* Profile.css */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+.profile-container {
+  font-family: 'Nunito', sans-serif;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.profile-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-field label {
+  font-weight: 600;
+  color: #333;
+  margin-right: 10px;
+}
+
+.profile-field p,
+.profile-field input,
+.profile-field select {
+  font-size: 16px;
+  margin: 0;
+  flex: 1;
+}
+
+.profile-field input,
+.profile-field select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.icon {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.profile-buttons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-edit,
+.btn-save {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-edit {
+  background-color: #007bff;
+}
+
+.btn-edit:hover {
+  background-color: #0056b3;
+}
+
+.btn-save {
+  background-color: #28a745;
+}
+
+.btn-save:hover {
+  background-color: #218838;
+}

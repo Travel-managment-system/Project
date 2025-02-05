@@ -1,22 +1,22 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import logo from '../../Assests/logo.JPEG';
+import { toast } from 'react-toastify';
 
 const NavBar2 = ({ setActivePage }) => {
   const navigate = useNavigate();
+  const token = sessionStorage.getItem('token');
 
   const logoutsession = () => {
-    sessionStorage.removeItem('token');
-    navigate('/');
-  };
-
-  const handleProfileClick = () => {
-    navigate('/profile');
+    toast.success('Logged out');
+    // sessionStorage.removeItem('token');
+    sessionStorage.clear()
+    navigate('/home');
   };
 
   return (
-    <nav className="navbar navbar-expand-lg">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="/">
         <img src={logo} alt="Logo" className="logo" />
         Travent<span>.</span>
@@ -38,12 +38,16 @@ const NavBar2 = ({ setActivePage }) => {
           <li className="nav-item">
             <button className="nav-link btn btn-link" onClick={() => setActivePage('Vehicles')}>Vehicles</button>
           </li>
-          <li className="nav-item">
-            <button className="nav-link btn btn-link" onClick={handleProfileClick}>Profile</button>
-          </li>
-          <li className="nav-item">
-            <button className="nav-link btn btn-link" onClick={logoutsession}>Logout</button>
-          </li>
+          {token === null && (
+            <Link to="/login" className="nav-link">Login</Link>
+          )}
+          {token !== null && (
+            <>
+              <button className="nav-link btn btn-link" onClick={logoutsession}>Logout</button>
+              <Link to="/wishlist" className="nav-link">Wishlist</Link>
+              <Link to="/profile" className='nav-link'>Profile</Link>
+            </>
+          )}
         </ul>
       </div>
     </nav>

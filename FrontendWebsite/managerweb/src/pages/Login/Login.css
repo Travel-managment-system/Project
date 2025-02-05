@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+.body-login {
+    /* margin-top: 0px; */
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background: url(./../../Assests/eva-darron-oCdVtGFeDC0-unsplash.jpg) no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+.login-container{
+    margin-top: 100px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.login-form, .register-form {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  z-index: 1;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.login-form h2, .register-form h2 {
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 700;
+}
+
+.login-form p, .register-form p {
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.input-group input {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.input-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn-login, .btn-register {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-login:hover, .btn-register:hover {
+  background-color: #0056b3;
+}
+
+.register-link, .login-link {
+  margin-top: 20px;
+  text-align: center;
+  color: #555;
+}
+
+.register-link a, .login-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link a:hover, .login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-form, .register-form {
+    padding: 40px 20px;
+    margin-top: 50px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -28,7 +28,6 @@ const Flights = () => {
     return (
         <div className='container'>
             
-            <h1>Available flights</h1>
             
                 <div className="package-container">
                     {Flights.length > 0 ? (

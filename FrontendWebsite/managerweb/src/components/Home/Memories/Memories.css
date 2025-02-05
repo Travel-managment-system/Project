@@ -1,0 +1,39 @@
+/* Memories.css */
+.memories-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .memory-item {
+    position: relative;
+  }
+  
+  .memory-image {
+    width: 60%;
+    max-width: 300px; /* Set a maximum width */
+    max-height: 150px; /* Set a maximum height */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 8px;
+    margin: 0 auto; /* Center the images */
+  }
+  
+  .memory-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 0 0 8px 8px;
+    text-align: center;
+  }
+  
+  .memory-item:hover .memory-text {
+    opacity: 1;
+  }
+  
