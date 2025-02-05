@@ -25,7 +25,8 @@ app.use(express.static('images'));
 app.use((request, response, next) => {
     const skipUrls = [
                        '/login', 
-                         '/register'
+                         '/register',
+                              '/places'
                                     ];
 // if (request.url === '/user/login' || request.url === '/user/register') {
 if(skipUrls.findIndex(item=>item==request.url)!=-1 ) { // 
@@ -51,6 +52,9 @@ else{
 //add the routes
 const userRouter = require('./routes/users');
 app.use('/',  userRouter);
+
+const wishlistRouter = require('./routes/wishlist');
+app.use('/',  wishlistRouter);
  
 const packageRouter = require('./routes/package');
 app.use('/', packageRouter);

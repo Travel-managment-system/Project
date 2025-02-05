@@ -4,9 +4,9 @@ const db = require('../db');
 const utils = require('../utils');
 
 // // See all packages
-router.get('/packages', async (req, res) => {
+router.get('/places', async (req, res) => {
     try {
-        const queryText = 'SELECT * FROM packages';
+        const queryText = 'SELECT * FROM place';
         const [packages] = await db.execute(queryText);
         res.send(utils.createSuccess(packages));
     } catch (err) {
@@ -14,6 +14,56 @@ router.get('/packages', async (req, res) => {
     }
 });
 
+
+///get place by id
+router.get('/places/:place_id', async (req, res) => {
+    try {
+        const placeId = req.params.place_id;
+        const queryText = 'SELECT * FROM place WHERE place_id = ?';
+        const [place] = await db.execute(queryText, [placeId]);
+        if (place.length > 0) {
+            res.send(utils.createSuccess(place[0]));
+        } else {
+            res.status(404).send(utils.createError('Place not found'));
+        }
+    } catch (err) {
+        res.send(utils.createError(err));
+    }
+});
+
+
+
+
+router.get('/places', async (req, res) => {
+    try {
+        const cityId = req.query.cityId;
+        const queryText = 'SELECT * FROM place WHERE city_id = ?';
+        const [places] = await db.execute(queryText, [cityId]);
+        if (places.length > 0) {
+            res.send(utils.createSuccess(places));
+        } else {
+            res.status(404).send(utils.createError('No places found for the given city ID'));
+        }
+    } catch (err) {
+        res.send(utils.createError(err));
+    }
+    });
+
+
+    router.get('/places/city/:city_id', async (req, res) => {
+        try {
+            const cityId = req.params.city_id;
+            const queryText = 'SELECT * FROM place,city WHERE place.city_id = ? and place.city_id=city.city_id';
+            const [places] = await db.execute(queryText, [cityId]);
+            if (places.length > 0) {
+                res.send(utils.createSuccess(places));
+            } else {
+                res.status(404).send(utils.createError('No places found for the given city ID'));
+            }
+        } catch (err) {
+            res.send(utils.createError(err));
+        }   
+        });
 // router.get('/:city', async (req, res) => {
 //     try {
 //         const city = req.params.city;

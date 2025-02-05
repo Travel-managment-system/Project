@@ -90,14 +90,18 @@ try {
 
 
 
-router.get('/personal-details', authenticateToken, async (req, res) => {
-    const userId = req.user.userId; // Extract the user ID from the token
+router.get('/profile', async (req, res) => {
+    
     try {
+        const userId = req.query.user_id; // Extract the user ID from the token
+        if (!userId) {
+            return res.status(400).send(utils.createError('User ID is required'));
+          }
       const queryText = `
         SELECT first_name, last_name, email, mobile_no, dob, aadhar_no,
                passport_no, marital_status 
-        FROM personal_details 
-        WHERE user_id = ?`;
+        FROM personal_details,user 
+        WHERE personal_details.user_id = ? and personal_details.user_id=user.user_id`;
       const [personalDetails] = await db.execute(queryText, [userId]);
       res.send(utils.createSuccess(personalDetails));
     } catch (err) {
