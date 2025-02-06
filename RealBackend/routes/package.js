@@ -64,6 +64,40 @@ router.get('/places', async (req, res) => {
             res.send(utils.createError(err));
         }   
         });
+
+        
+// GET places by specific city
+
+//http://localhost:4000/places-by-city?city_name=Agra
+router.get('/places-by-city', async (req, res) => {
+    const { city_name } = req.query;
+  
+    try {
+      const queryText = `
+              SELECT
+                  pl.place_id,
+                  pl.name AS place_name,
+                  pl.place_desc,
+                  pl.image AS place_image,
+                  c.city_name
+              FROM
+                  place pl
+              JOIN
+                  city c ON pl.city_id = c.city_id
+              WHERE
+                  c.city_name = ?
+              ORDER BY
+                  pl.name;
+          `;
+      const [results] = await db.execute(queryText, [city_name]);
+      res.send(results);
+    } catch (err) {
+      console.error('Server Error:', err);
+      res.status(500).json({ error: 'An unknown error occurred' });
+    }
+  });
+  
+  
 // router.get('/:city', async (req, res) => {
 //     try {
 //         const city = req.params.city;
