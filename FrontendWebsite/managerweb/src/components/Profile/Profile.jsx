@@ -4,12 +4,15 @@ import { toast } from 'react-toastify';
 import { FaUser, FaEnvelope, FaMobileAlt, FaBirthdayCake, FaLock, FaUserEdit, FaSave } from 'react-icons/fa'; // Importing icons
 import 'react-toastify/dist/ReactToastify.css';
 import './Profile.css'; // Import the CSS file
+// import { useNavigation } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
+  // const navigate = useNavigation() 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('userId');
@@ -38,17 +41,67 @@ const Profile = () => {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    // Implement save functionality here
-    setIsEditing(false);
-    toast.success('Profile updated successfully!');
+  const handleSave = async () => {
+    const token = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('userId');
+  
+    const data = {
+      user_id: userId,
+      phone: profile.mobile_no,
+      dob: profile.dob,
+      marital_status: profile.marital_status,
+      first_name: profile.first_name,
+      last_name: profile.last_name,
+    };
+  
+    try {
+      const response = await axios.put('http://localhost:4000/UpdateProfile', data, {
+        headers: { token }
+      });
+      if (response.data.status === 'success') {
+        toast.success('Profile updated successfully!');
+        setIsEditing(false);
+      } else {
+        toast.error('Failed to update profile: ' + response.data.message);
+      }
+    } catch (error) {
+      toast.error('Error updating profile: ' + error.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    const token = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('userId');
+
+    try {
+      const response = await axios.patch('http://localhost:4000/update-status', {
+        user_id: userId
+      }, {
+        headers: { token }
+      });
+      if (response.data.status === 'success') {
+        toast.success(`Profile deactivated successfully!${userId}`);
+        // Add any additional logic for deactivation, such as redirecting to a different page
+        sessionStorage.clear()
+        // navigate('/login')
+      } else {
+        toast.error('Failed to deactivate profile: ' + response.data.message);
+      }
+    } catch (error) {
+      toast.error('Error deactivating profile: ' + error.message);
+    }
+    setShowDeletePopup(false);
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
+  return (<>
+  {/* <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/home')}>
+          Go Back
+        </button> */}
+  
 
-  return (
     <div className="profile-container">
       <h3>User Profile</h3>
       {profile ? (
@@ -165,13 +218,27 @@ const Profile = () => {
                   <FaUserEdit /> Edit Profile
                 </button>
               )}
+              <button className="btn-delete" onClick={() => setShowDeletePopup(true)}>
+                Delete Profile
+              </button>
             </div>
           </div>
         </div>
       ) : (
         <p>Profile not found.</p>
       )}
+
+      {showDeletePopup && (
+        <div className="delete-popup">
+          <div className="delete-popup-content">
+            <p>Are you sure you want to delete your account?</p>
+            <button className="btn-confirm" onClick={handleDelete}>Yes</button>
+            <button className="btn-cancel" onClick={() => setShowDeletePopup(false)}>No</button>
+          </div>
+        </div>
+      )}
     </div>
+    </>
   );
 };
 

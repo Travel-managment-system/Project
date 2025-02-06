@@ -20,11 +20,20 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestedPlaces, setSuggestedPlaces] = useState([]);
   const navigate = useNavigate(); // Initialize useNavigate
+sessionStorage.removeItem('placeId')
+sessionStorage.removeItem('cityId')
 
   const handleSearch = () => {
-    navigate('/city', { state: { searchTerm } }); // Navigate to CityPage with searchTerm as state
-    console.log('Searching for:', searchTerm);
-  };
+    if(!searchTerm){
+      toast.warning('enter a city name ')
+    }
+    else{
+      sessionStorage.setItem('cityName',searchTerm)
+      navigate('/city', { state: { searchTerm } }); // Navigate to CityPage with searchTerm as state
+      console.log('Searching for:', searchTerm);
+  
+    }
+      };
 
   const renderContent = () => {
     switch (activePage) {

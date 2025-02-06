@@ -47,7 +47,7 @@ const PlaceDetails = () => {
 
   const handleAddToWishlist = (placeId) => {
     const token = sessionStorage.getItem('token'); // Retrieve the token from session storage
-
+// sessionStorage.removeItem('placeId')
     if (userId && placeId && token) {
       axios
         .post(
