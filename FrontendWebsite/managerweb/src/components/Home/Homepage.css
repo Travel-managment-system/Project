@@ -26,15 +26,24 @@
   z-index: -1;
   border-radius: 18px;
 }
-
+.home-hero-h2{
+  color: #000000;
+  
+}
+.home-hero-text{
+  color: #1e1e1e;
+}
 @keyframes anim_change_img {
   0% {
     background: url(./../../Assests/eva-darron-oCdVtGFeDC0-unsplash.jpg);
+
   }
   100% {
     background: url(./../../Assests/luca-bravo-O453M2Liufs-unsplash.jpg);
+    
   }
 }
+
 
 .imageContainer h2 {
   font-size: 48px;

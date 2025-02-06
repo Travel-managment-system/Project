@@ -24,15 +24,21 @@ sessionStorage.removeItem('placeId')
 sessionStorage.removeItem('cityId')
 
   const handleSearch = () => {
-    if(!searchTerm){
-      toast.warning('enter a city name ')
+    if(!token){
+      toast.warning('please log in to see search result')
     }
     else{
-      sessionStorage.setItem('cityName',searchTerm)
-      navigate('/city', { state: { searchTerm } }); // Navigate to CityPage with searchTerm as state
-      console.log('Searching for:', searchTerm);
-  
+      if(!searchTerm){
+        toast.warning('enter a city name ')
+      }
+      else{
+        sessionStorage.setItem('cityName',searchTerm)
+        navigate('/city', { state: { searchTerm } }); // Navigate to CityPage with searchTerm as state
+        console.log('Searching for:', searchTerm);
+    
+      }
     }
+   
       };
 
   const renderContent = () => {
@@ -76,8 +82,8 @@ sessionStorage.removeItem('cityId')
       <div className='main-content'>
       {/* <div className='main-content'> */}
         <div className="hero-section">
-          <h2>Plan Your Perfect Trip</h2>
-          <p>Explore the world's best destinations at unbeatable prices.</p>
+          <h2 className='home-hero-h2'>Plan Your Perfect Trip</h2>
+          <p className='home-hero-text'>Explore the world's best destinations at unbeatable prices.</p>
           <div className="search-form">
             <form
               onSubmit={(e) => {
