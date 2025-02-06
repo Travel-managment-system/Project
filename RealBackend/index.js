@@ -26,7 +26,7 @@ app.use((request, response, next) => {
     const skipUrls = [
                        '/login', 
                          '/register',
-                              '/places'
+                              '/places','/vehicles','/hotels','/vehicles/typeAirplane'
                                     ];
 // if (request.url === '/user/login' || request.url === '/user/register') {
 if(skipUrls.findIndex(item=>item==request.url)!=-1 ) { // 

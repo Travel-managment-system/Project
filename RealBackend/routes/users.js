@@ -72,18 +72,20 @@ catch(err){
 
 // Update user status
 //update user information 
-router.put('/UpdateProfile',async(req,res)=>{
-    const {user_id,phone,dob,aadhar_no,passport_no,marital_status} = req.body;
-try {
-    const queryText = `UPDATE user SET phone = ?, dob = ?, aadhar_no =?,
-    passport_no = ?, marital_status = ? WHERE user_id = ?` ;
-    const result = await db.query(queryText,[phone,dob,aadhar_no,passport_no,marital_status])
-    res.send(utils.createSuccess(result))
-    }catch(err){
-        res.send(utils.createError(err))
-        
-}
-})
+router.put('/UpdateProfile', async (req, res) => {
+  const { user_id, phone, dob, marital_status, first_name, last_name } = req.body;
+  try {
+    const queryText = `
+      UPDATE personal_details AS pd
+      JOIN user AS u ON pd.user_id = u.user_id
+      SET pd.mobile_no = ?, pd.dob = ?, pd.marital_status = ?, u.first_name = ?, u.last_name = ?
+      WHERE pd.user_id = ?`;
+    const result = await db.query(queryText, [phone, dob, marital_status, first_name, last_name, user_id]);
+    res.send(utils.createSuccess(result));
+  } catch (err) {
+    res.send(utils.createError(err));
+  }
+});
 
 
 
@@ -108,7 +110,24 @@ router.get('/profile', async (req, res) => {
       res.send(utils.createError(err.message));
     }
   });
-  
+
+
+  router.patch('/update-status', async (req, res) => {
+    const  {user_id } = req.body;
+    try {
+      console.log(user_id)
+      const queryText = `
+        UPDATE user 
+        SET status='deactive'
+        WHERE user_id = ?`;
+      const result = await db.query(queryText, [user_id]);
+      console.log("hello",result)
+      res.send(utils.createSuccess(result));
+      // console.log("object changed",result)
+    } catch (err) {
+      res.send(utils.createError(err));
+    }
+  });
 module.exports = router;
 
 
