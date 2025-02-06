@@ -46,7 +46,7 @@ INSERT INTO `booking_details` VALUES (1,4,5,3,'2025-02-02','2025-03-01',18179,'y
 /*!40000 ALTER TABLE `booking_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
+--wishlist
 -- Table structure for table `city`
 --
 
@@ -332,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-06 21:30:47
+-- Dump completed on 2025-02-06 21:31:12
