@@ -7,7 +7,6 @@ import {
     Alert
 } from 'react-native';
 import { Text, TextInput, Button, Checkbox, Headline, Subheading, Provider, Snackbar } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 // const url = 'http://192.168.1.14:4000/register';

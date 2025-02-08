@@ -11,9 +11,13 @@ import ProfilePage from './Profile';
 import SignupPage from './SignUp';
 import SigninPage from './SignIn';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import PopularCity from './home/PopularCity';
-import PopularHotels from './home/PopularHotels';
-import PopularPackages from './home/PopularPackages';
+import EditProfile from './EditProfile';
+import Profile from './Profile';
+
+
+// import PopularCity from './home/PopularCity';
+// import PopularHotels from './home/PopularHotels';
+// import PopularPackages from './home/PopularPackages';
 
 
 const Tab = createBottomTabNavigator();
@@ -59,10 +63,12 @@ function Launcher() {
                 <Stack.Screen name="SigninPage" component={SigninPage} options={{ headerShown: false }} />
                 <Stack.Screen name="SignupPage" component={SignupPage} />
                 <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
-                <Stack.Screen name="PopularPackages" component={PopularPackages} />
+                {/* <Stack.Screen name="PopularPackages" component={PopularPackages} />
                 <Stack.Screen name="PopularCity" component={PopularCity} />
-                <Stack.Screen name="PopularHotels" component={PopularHotels} />
+                <Stack.Screen name="PopularHotels" component={PopularHotels} /> */}
                 <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
+                <Stack.Screen name="EditProfilePage" component={EditProfile} />
+                <Stack.Screen name="profilePage" component={Profile}  />
 
             </Stack.Navigator>
         </NavigationContainer>

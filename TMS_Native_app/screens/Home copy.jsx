@@ -11,7 +11,7 @@ export default function Home({ navigation }) {
 
     const username = AsyncStorage.getItem('username');
     // const url = 'http://192.168.1.14:4000/packages';
-    const url = "http://192.168.222.127:4000/packages";
+    // const url = "http://172.20.10.4:4000/packages";
 
 
     useEffect(() => {

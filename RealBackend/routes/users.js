@@ -60,7 +60,12 @@ res.send(utils.createError('user dose not exist'));
                 token,firstName: user['first_name'],
                 lastName: user['last_name'],
                 role: user['role'],
+<<<<<<< Updated upstream
                 userId: user['user_id']
+=======
+                email: user['email'],
+                user_id: user['user_id'],
+>>>>>>> Stashed changes
             })
         );
         }
@@ -72,6 +77,7 @@ catch(err){
 
 // Update user status
 //update user information 
+<<<<<<< Updated upstream
 router.put('/UpdateProfile', async (req, res) => {
   const { user_id, phone, dob, marital_status, first_name, last_name } = req.body;
   try {
@@ -85,6 +91,34 @@ router.put('/UpdateProfile', async (req, res) => {
   } catch (err) {
     res.send(utils.createError(err));
   }
+=======
+router.put('/UpdateProfile',async(req,res)=>{
+    const {user_id,phone,dob,aadhar_no,passport_no,marital_status} = req.body;
+try {
+    const queryText = `UPDATE user SET phone = ?, dob = ?, aadhar_no =?,
+    passport_no = ?, marital_status = ? WHERE user_id = ?` ;
+    const result = await db.query(queryText,[phone,dob,aadhar_no,passport_no,marital_status])
+    res.send(utils.createSuccess(result))
+    }catch(err){
+        res.send(utils.createError(err))
+        
+}
+})
+
+router.get('/personal-details/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const queryText = `
+            SELECT first_name, last_name, email, password,mobile_no, dob, gender, aadhar_no,
+    passport_no, marital_status from personal_details,user 
+            WHERE user.user_id=personal_details.user_id and personal_details.user_id = ?`;
+        
+        const [personalDetails] = await db.execute(queryText, [userId]);
+        res.send(utils.createSuccess(personalDetails));
+    } catch (err) {
+        res.send(utils.createError(err));
+    }
+>>>>>>> Stashed changes
 });
 
 

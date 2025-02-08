@@ -5,14 +5,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const url = 'http://192.168.1.14:4000/packages';
-const url = "http://192.168.222.127:4000/packages";
+const url = "http://172.20.10.4:4000/packages";
 
 const PopularPackages = ({ packages }) => (
     <ScrollView style={styles.scrollView}>
         <View style={styles.packageList}>
             {packages.map((pkg) => (
                 <Card key={pkg.pkg_id} style={styles.card}>
-                    <Card.Cover source={{ uri: "http://192.168.222.127:4000/" + pkg.image }} />
+                    <Card.Cover source={{ uri: "http://172.20.10.4:4000/" + pkg.image }} />
                     <Card.Content>
                         <Text style={styles.cardTitle}>{pkg.city}</Text>
                         <Text style={styles.cardDescription}>{pkg.description}</Text>

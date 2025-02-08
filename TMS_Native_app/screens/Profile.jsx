@@ -1,21 +1,57 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 import { IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const Profile = (props) => {
     const [visible, setVisible] = useState(false);
     const navigation = useNavigation();
     const showDialog = () => setVisible(true);
     const hideDialog = () => setVisible(false);
+    const [userData, setUserData] = useState({})
+    const url = 'http://172.20.10.4:4000/personal-details/';
+    const [profile, setProfile] = useState([])
+
+    console.log('1999999999', profile)
+
+
+    useEffect( ()=>{
+        AsyncStorage.getItem('userData').then((res)=>{
+            setUserData(JSON.parse(res))
+        }).catch((e)=>{console.log(e)})
+    },[])
+
+    useEffect(()=>{
+        const fetchProfile = async () => {
+            try {
+                const token = await AsyncStorage.getItem('token');
+                const response = await axios.get(`${url}${JSON.parse(userData?.user_id)}`, {
+                    headers: {
+                        Token: token,
+                    },
+                });
+                if (response.data && Array.isArray(response.data.data)) {
+                    console.log("response.data", response.data)
+                    setProfile(response.data.data);
+                } else {
+                    console.error('Unexpected response format:', response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching packages:', error);
+            }
+        };
+        fetchProfile()
+    },[userData])
+     
 
     const handleLogout = () => {
         // Perform any logout logic here, then redirect to the login page
         props.navigation.navigate("SigninPage");  // Replace 'Login' with the name of your login screen
         hideDialog();
-
     };
     return (<Provider>
         <View style={styles.container}>
@@ -27,42 +63,46 @@ const Profile = (props) => {
                         style={styles.profilePicture}
                     />
                     <IconButton
-                        icon="camera"
+                        icon="pencil"
                         size={20}
-                        // onPress={() => { }}
+                        onPress={() => {
+                            props.navigation.navigate("EditProfilePage", profile)
+                         }}
                         style={styles.editIcon}
                     />
                 </View>
-                <Title style={styles.title}>Yash Nagtode</Title>
+                {/* <Title style={styles.title}>Yash Nagtode</Title> */}
+
+                <Title style={styles.title}>{`${userData.firstName} ${userData.lastName}`}</Title>
 
                 <View style={styles.detailsContainer}>
                     <View style={styles.infoContainer}>
                         <MaterialIcons name="email" size={24} color="black" style={styles.icon} />
-                        <Paragraph style={styles.infoValue}>hallo@gmail.com</Paragraph>
+                        <Paragraph style={styles.infoValue}>{profile[0]?.email}</Paragraph>
                     </View>
                     <View style={styles.infoContainer}>
                         <MaterialIcons name="phone" size={20} style={styles.icon} />
-                        <Paragraph style={styles.infoValue}>+8801763204103</Paragraph>
+                        <Paragraph style={styles.infoValue}>{profile[0]?.mobile_no}</Paragraph>
                     </View>
                     <View style={styles.infoContainer}>
                         <MaterialIcons name="calendar-today" size={20} style={styles.icon} />
-                        <Paragraph style={styles.infoValue}>07 March 2002</Paragraph>
+                        <Paragraph style={styles.infoValue}>{profile[0]?.dob}</Paragraph>
                     </View>
                     <View style={styles.infoContainer}>
                         <MaterialIcons name="person" size={20} style={styles.icon} />
-                        <Paragraph style={styles.infoValue}>Gender: Male</Paragraph>
+                        <Paragraph style={styles.infoValue}>{`gender : ${profile[0]?.gender}`}</Paragraph>
                     </View>
                     <View style={styles.infoContainer}>
                         <MaterialIcons name="ring-volume" size={20} style={styles.icon} />
-                        <Paragraph style={styles.infoValue}>Marital Status: Single</Paragraph>
+                        <Paragraph style={styles.infoValue}>Marital Status: {profile[0]?.marital_status }</Paragraph>
                     </View>
                     <View style={styles.infoContainer}>
                         <MaterialIcons name="fingerprint" size={20} style={styles.icon} />
-                        <Paragraph style={styles.infoValue}>Aadhaar Number: 1234 5678 9012</Paragraph>
+                        <Paragraph style={styles.infoValue}>Aadhaar Number:{profile[0]?.aadhar_no}</Paragraph>
                     </View>
                     <View style={styles.infoContainer}>
                         <MaterialIcons name="flight" size={20} style={styles.icon} />
-                        <Paragraph style={styles.infoValue}>Passport Number: A1234567</Paragraph>
+                        <Paragraph style={styles.infoValue}>Passport Number: {profile[0]?.passport_no}</Paragraph>
                     </View>
                 </View>
                 <Button

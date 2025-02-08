@@ -12,12 +12,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // URL of your backend login API
-const url = "http://192.168.222.127:4000/login";
+// const url = "http://192.168.222.127:4000/login";
 // const url = 'http://192.168.1.14:4000/login';
 
+const url = 'http://172.20.10.4:4000/login';
+
 export default function SigninPage(props) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('harsh@g.c');
+    const [password, setPassword] = useState('Harsh123');
     const [keepSignedIn, setKeepSignedIn] = useState(false);
     const [hidePassword, setHidePassword] = useState(true);
     const [visible, setVisible] = useState(false);
@@ -31,6 +33,7 @@ export default function SigninPage(props) {
     const hideSnackbar = () => setVisible(false);
 
     const handleSignIn = async () => {
+        // Alert.alert('mohan')
         // props.navigation.replace('MainTabs');
 
         //alerts
@@ -58,7 +61,7 @@ export default function SigninPage(props) {
                 },
             });
 
-            // console.log("response data: ", response.data);
+             console.log("response data: ", response.data);
 
             // Navigate to the next screen or perform other actions
             if (response && response.data && response.data.data && response.data.data.token) {
@@ -68,6 +71,8 @@ export default function SigninPage(props) {
                 // Save the token to AsyncStorage
                 await AsyncStorage.setItem('token', token);
                 await AsyncStorage.setItem('username', response.data.data.firstName);
+                await AsyncStorage.setItem('userData', JSON.stringify(response.data.data)); 
+                console.log('c', response.data)
 
                 // Alert.alert('Login Successful', 'You are now logged in!');
 
