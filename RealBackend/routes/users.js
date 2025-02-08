@@ -73,19 +73,29 @@ catch(err){
 // Update user status
 //update user information 
 router.put('/UpdateProfile', async (req, res) => {
-  const { user_id, phone, dob, marital_status, first_name, last_name } = req.body;
+  const {
+    user_id, phone, dob, marital_status, first_name, last_name,
+    email, password, gender, aadhar_no, passport_no
+  } = req.body;
+
   try {
     const queryText = `
       UPDATE personal_details AS pd
       JOIN user AS u ON pd.user_id = u.user_id
-      SET pd.mobile_no = ?, pd.dob = ?, pd.marital_status = ?, u.first_name = ?, u.last_name = ?
+      SET pd.mobile_no = ?, pd.dob = ?, pd.marital_status = ?, 
+          pd.gender = ?, pd.aadhar_no = ?, pd.passport_no = ?, 
+          u.first_name = ?, u.last_name = ?, u.email = ?, u.password = ?
       WHERE pd.user_id = ?`;
-    const result = await db.query(queryText, [phone, dob, marital_status, first_name, last_name, user_id]);
+    const result = await db.query(queryText, [
+      phone, dob, marital_status, gender, aadhar_no, passport_no,
+      first_name, last_name, email, password, user_id
+    ]);
     res.send(utils.createSuccess(result));
   } catch (err) {
     res.send(utils.createError(err));
   }
 });
+
 
 
 
@@ -100,7 +110,7 @@ router.get('/profile', async (req, res) => {
             return res.status(400).send(utils.createError('User ID is required'));
           }
       const queryText = `
-        SELECT first_name, last_name, email, mobile_no, dob, aadhar_no,
+        SELECT first_name, last_name, email,gender, mobile_no, dob, aadhar_no,
                passport_no, marital_status 
         FROM personal_details,user 
         WHERE personal_details.user_id = ? and personal_details.user_id=user.user_id`;
