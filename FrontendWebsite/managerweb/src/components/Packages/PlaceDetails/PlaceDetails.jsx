@@ -113,8 +113,8 @@ const PlaceDetails = () => {
         <FaHeart className="heart-icon" onClick={() => handleAddToWishlist(placeDetails.place_id)} />
         </div>
         
-        {/* <Hotels by city></Hotels> */}
-        <WeatherComponent></WeatherComponent>
+        {/* <WeatherComponent></WeatherComponent> */}
+        <div>weather component</div>
         <HotelsByCity></HotelsByCity>
         <div className="other-places-section">
           <h2>Other Places to Visit in the {cityName}</h2>
