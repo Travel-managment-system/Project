@@ -115,6 +115,9 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+      <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/home')}>
+          Go Back
+        </button>
       <h3>User Profile</h3>
       {profile ? (
         <div className="card">
@@ -258,6 +261,7 @@ const Profile = () => {
               <button className="btn-secondary" onClick={handleViewBookings}>
                 <FaListAlt /> View Bookings
               </button>
+            
             </div>
           </div>
         </div>

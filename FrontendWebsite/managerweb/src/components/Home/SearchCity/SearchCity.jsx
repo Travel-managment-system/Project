@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SearchCity.css'; // Import the CSS file
+import './../../Hotels/HotelsByCity'
+import HotelsByCity from './../../Hotels/HotelsByCity';
 
 const SearchCity = () => {
   const cityName = sessionStorage.getItem('cityName');
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = sessionStorage.getItem('token');
-
+// const cityId= sessionStorage.getItem('cityId')
   useEffect(() => {
     axios
       .get('http://localhost:4000/places-by-city', {
@@ -16,6 +18,8 @@ const SearchCity = () => {
       })
       .then((response) => {
         setPlaces(response.data);
+        debugger
+        sessionStorage.setItem('cityId',response.data[0].city_id)
         setLoading(false);
       })
       .catch((error) => {
@@ -28,7 +32,7 @@ const SearchCity = () => {
     return <div>Loading...</div>;
   }
 
-  return (
+  return (<>
     <div className="search-by-city-container">
       <h2>Places in {cityName}</h2>
       {places.length > 0 ? (
@@ -46,7 +50,11 @@ const SearchCity = () => {
       ) : (
         <p>No places found in {cityName}.</p>
       )}
+      
     </div>
+    <HotelsByCity ></HotelsByCity>
+    </>
+  
   );
 };
 

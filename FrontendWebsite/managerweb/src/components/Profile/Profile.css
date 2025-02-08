@@ -183,3 +183,15 @@ h3 {
   background-color: #5a6268;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+.go-back-btn {
+  color: white;
+  background-color: #6c757d;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.go-back-btn:hover {
+  background-color: #5a6268;
+}

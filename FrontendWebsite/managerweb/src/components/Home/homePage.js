@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Memories from './Memories/Memories';
 import Reviews from './Reviews/Reviews';
+import FlightComponent from '../Flights/FlightsByDistance';
 
 const HomePage = () => {
   const token = sessionStorage.getItem('token');
@@ -56,6 +57,7 @@ sessionStorage.removeItem('cityName')
         return (
           <div>
               <h2>We have the best flights for you at the unbeatable prices</h2>
+              {/* <FlightComponent></FlightComponent> */}
             <Flights />
           </div>
         );
