@@ -9,9 +9,13 @@ import 'slick-carousel/slick/slick-theme.css';
 import { toast } from 'react-toastify';
 import Hotels from '../../Hotels/Hotels';
 import HotelsByCity from '../../Hotels/HotelsByCity';
-
+import WeatherComponent from './Weather/WeatherComponent';
+// import './../../../App.css'
 const PlaceDetails = () => {
   const { place_id } = useParams();
+  const cityName=sessionStorage.getItem('cityName')
+  const cityId=sessionStorage.getItem('cityId')
+  
   const [placeDetails, setPlaceDetails] = useState(null);
   const [otherPlaces, setOtherPlaces] = useState([]);
   const token = sessionStorage.getItem('token');
@@ -34,6 +38,8 @@ const PlaceDetails = () => {
       })
       .then((result) => {
         const places = result.data.data;
+        debugger
+        sessionStorage.setItem('cityName',places[0].city_name)
         setOtherPlaces(places);
       })
       .catch((error) => {
@@ -95,21 +101,23 @@ const PlaceDetails = () => {
         </button>
       </div>
       <div className="place-details-container">
+       
         <h1>{placeDetails.name}</h1>
         <img src={`http://localhost:4000/${placeDetails.image}`} alt={placeDetails.name} className="place-image" />
 
 
         <p>{placeDetails.place_desc}</p>
-        <button >add to package</button>
+        <button className='book-place-btn' >add to package</button>
         <p>or</p>
         <div className='fav-div'>
         <FaHeart className="heart-icon" onClick={() => handleAddToWishlist(placeDetails.place_id)} />
         </div>
         
         {/* <Hotels by city></Hotels> */}
+        <WeatherComponent></WeatherComponent>
         <HotelsByCity></HotelsByCity>
         <div className="other-places-section">
-          <h2>Other Places to Visit in the City</h2>
+          <h2>Other Places to Visit in the {cityName}</h2>
           {otherPlaces.length > 0 ? (
             <Slider {...settings}>
               {otherPlaces.map((place) => (

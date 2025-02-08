@@ -7,14 +7,16 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  margin: 0 auto; /* Center the container */
 }
 
 .place-image {
-  width: 20%; /* Make the image larger */
+  width: 100%; /* Make the image responsive */
+  max-width: 250px; /* Set a max-width for the image */
   height: auto;
   border-radius: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -133,9 +135,10 @@ p {
   background-color: #5a6268;
 }
 
-.fav-div{
+.fav-div {
   background-color: #5a6268;
 }
+
 .btn {
   margin-right: 10px;
 }
@@ -159,3 +162,5 @@ p {
   color: #666;
   margin-bottom: 5px;
 }
+
+

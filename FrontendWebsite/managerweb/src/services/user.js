@@ -21,3 +21,25 @@ return response.data;
        return createError(error);
     }
 }
+
+
+
+export async function login(email, password) {
+    try{
+const url = createURL('login');
+console.log("url",url);
+
+
+const body = {
+    email,
+    password
+}
+
+const response =  await axios.post(url,body )
+// debugger
+return response.data;
+    }
+    catch(error){
+       return createError(error);
+    }
+}

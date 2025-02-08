@@ -1,0 +1,43 @@
+/* WeatherComponent.css */
+.weather-component {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .weather-info h3 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  .weather-info p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .error {
+    color: red;
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .temp-icon {
+    font-size: 48px;
+    color: #ff5722;
+    margin: 10px 0;
+  }
+  
+  .weather-description {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
