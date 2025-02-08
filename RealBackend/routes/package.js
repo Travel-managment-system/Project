@@ -34,6 +34,8 @@ router.get('/places/:place_id', async (req, res) => {
 
 
 
+
+
 router.get('/places', async (req, res) => {
     try {
         const cityId = req.query.cityId;
@@ -97,6 +99,44 @@ router.get('/places-by-city', async (req, res) => {
     }
   });
   
+  
+  
+router.get('/bookings/user', async (req, res) => {
+    const { user_id } = req.body;
+  
+    if (!user_id) {
+      return res.status(401).json({ status: 'error', error: 'Unauthorized' });
+    }
+  
+    try {
+      const queryText = `
+         SELECT 
+    bd.*,
+    h.*,
+    c.*,
+    pl.*,
+    v.*
+FROM 
+    booking_details bd
+JOIN 
+    hotels h ON bd.hotel_id = h.hotel_id
+JOIN 
+    city c ON bd.city_id = c.city_id
+JOIN 
+    place pl ON bd.place_id = pl.place_id
+JOIN 
+    vehicles v ON bd.vehicle_id = v.vehicle_id
+WHERE 
+    bd.user_id = ?;
+  `;
+      const [results] = await db.execute(queryText, [user_id]);
+  
+      res.json({ status: 'success', data: results });
+    } catch (err) {
+      console.error('Server Error:', err);
+      res.status(500).json({ status: 'error', error: 'An unknown error occurred' });
+    }
+  });
   
 // router.get('/:city', async (req, res) => {
 //     try {

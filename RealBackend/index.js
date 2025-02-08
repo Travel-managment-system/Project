@@ -59,6 +59,9 @@ app.use('/',  wishlistRouter);
 const packageRouter = require('./routes/package');
 app.use('/', packageRouter);
 
+// const bookingRouter = require('./routes/bookings');
+// app.use('/', bookingRouter);
+
 const vehicleRouter = require('./routes/vehicles');
 app.use('/', vehicleRouter);
 // const updateUserRouter = require('./routes/updateUser');

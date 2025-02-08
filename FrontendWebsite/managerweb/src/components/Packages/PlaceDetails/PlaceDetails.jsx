@@ -93,8 +93,8 @@ const PlaceDetails = () => {
         <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/home')}>
           Go Back
         </button>
-        <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/home')}>
-         Cart
+        <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/bookings')}>
+         Booking details
         </button>
         <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/wishlist')}>
          See wishlist
