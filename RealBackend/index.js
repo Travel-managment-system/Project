@@ -73,6 +73,10 @@ app.use('/', hotelRouter);
 const managerRouter = require('./routes/managers');
 app.use('/manager', managerRouter);
 
+// //flights
+// const flightRouter = require('./routes/calculateDistance');
+// app.use('/', flightRouter);
+
 const adminRouter = require('./routes/admin');
 app.use('/admin', adminRouter);
 
