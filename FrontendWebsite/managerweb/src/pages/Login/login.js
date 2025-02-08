@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Login.css'; // Import the CSS file
-import NavBar2 from '../../components/Navbar/NavBar2';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +13,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:4000/login', { email, password })
+      .post(`http://localhost:4000/login`, { email, password })
       .then((response) => {
         if (response.data.status === 'success') {
           toast.success('Login successful!');
@@ -22,12 +21,20 @@ const Login = () => {
           const userId = response.data.data.userId;
           sessionStorage.setItem('token', response.data.data.token);
           sessionStorage.setItem('userId', userId);
+
           navigate('/home', { state: { role } });
+        if(role==='manager'){
+          navigate('/manager-home', { state: { role } });
+
+        }
         } else {
-          toast.error('Login failed: ' + response.data.message);
+          debugger
+          console.log("object failed"+response.data.error)
+          toast.error('Login failed:' + response.data.error);
         }
       })
       .catch((error) => {
+        console.log(error);
         toast.error('Error: ' + error.message);
       });
   };
