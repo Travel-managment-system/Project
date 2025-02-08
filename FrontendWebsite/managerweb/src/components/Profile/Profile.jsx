@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaUser, FaEnvelope, FaMobileAlt, FaBirthdayCake, FaLock, FaUserEdit, FaSave } from 'react-icons/fa'; // Importing icons
+import { FaUser, FaEnvelope, FaMobileAlt, FaBirthdayCake, FaLock, FaUserEdit, FaSave, FaSignOutAlt, FaListAlt, FaHeart } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
-import './Profile.css'; // Import the CSS file
-// import { useNavigation } from 'react-router-dom';
+import './Profile.css';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const navigate = useNavigate();
 
-  // const navigate = useNavigation() 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('userId');
@@ -27,7 +27,6 @@ const Profile = () => {
           setProfile(response.data.data[0]);
           setLoading(false);
         } else {
-          console.log(response.data.message);
           toast.error('Failed to fetch profile: ' + response.data.message);
         }
       })
@@ -52,6 +51,10 @@ const Profile = () => {
       marital_status: profile.marital_status,
       first_name: profile.first_name,
       last_name: profile.last_name,
+      email: profile.email,
+      gender: profile.gender,
+      aadhar_no: profile.aadhar_no,
+      passport_no: profile.passport_no,
     };
   
     try {
@@ -74,16 +77,16 @@ const Profile = () => {
     const userId = sessionStorage.getItem('userId');
 
     try {
-      const response = await axios.patch('http://localhost:4000/update-status', {
-        user_id: userId
+      const response = await axios.put('http://localhost:4000/update-status', {
+        user_id: userId,
+        status: 'deactive'
       }, {
         headers: { token }
       });
       if (response.data.status === 'success') {
-        toast.success(`Profile deactivated successfully!${userId}`);
-        // Add any additional logic for deactivation, such as redirecting to a different page
-        sessionStorage.clear()
-        // navigate('/login')
+        toast.success('Profile deactivated successfully!');
+        sessionStorage.clear();
+        navigate('/login');
       } else {
         toast.error('Failed to deactivate profile: ' + response.data.message);
       }
@@ -93,15 +96,24 @@ const Profile = () => {
     setShowDeletePopup(false);
   };
 
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate('/login');
+  };
+
+  const handleViewWishlist = () => {
+    navigate('/wishlist');
+  };
+
+  const handleViewBookings = () => {
+    navigate('/bookings');
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
-  return (<>
-  {/* <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/home')}>
-          Go Back
-        </button> */}
-  
 
+  return (
     <div className="profile-container">
       <h3>User Profile</h3>
       {profile ? (
@@ -173,11 +185,28 @@ const Profile = () => {
               {isEditing ? (
                 <input
                   type="date"
-                  value={profile.dob}
+                  value={profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : ''}
                   onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
                 />
               ) : (
                 <p>{profile.dob}</p>
+              )}
+            </div>
+            <div className="profile-field">
+              <label>Gender:</label>
+              {isEditing ? (
+                <select
+                  value={profile.gender}
+                  onChange={(e) =>
+                    setProfile({ ...profile, gender: e.target.value })
+                  }
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              ) : (
+                <p>{profile.gender}</p>
               )}
             </div>
             <div className="profile-field">
@@ -220,6 +249,15 @@ const Profile = () => {
               <button className="btn-delete" onClick={() => setShowDeletePopup(true)}>
                 Delete Profile
               </button>
+              <button className="btn-secondary" onClick={handleLogout}>
+                <FaSignOutAlt /> Logout
+              </button>
+              <button className="btn-secondary" onClick={handleViewWishlist}>
+                <FaHeart /> View Wishlist
+              </button>
+              <button className="btn-secondary" onClick={handleViewBookings}>
+                <FaListAlt /> View Bookings
+              </button>
             </div>
           </div>
         </div>
@@ -237,7 +275,6 @@ const Profile = () => {
         </div>
       )}
     </div>
-    </>
   );
 };
 

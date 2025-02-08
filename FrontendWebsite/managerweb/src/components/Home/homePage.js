@@ -23,7 +23,7 @@ const HomePage = () => {
 sessionStorage.removeItem('placeId')
 sessionStorage.removeItem('cityId')
 sessionStorage.removeItem('cityName')
-
+ 
 
   const handleSearch = () => {
     if(!token){

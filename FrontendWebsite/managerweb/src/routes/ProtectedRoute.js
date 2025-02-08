@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   // const { auth } = useAuth();
   const location = useLocation();
   const role = location.state?.role;
-  debugger;
+  // debugger;
 
   // if (!auth) {
   //   return <Navigate to="/" />;
