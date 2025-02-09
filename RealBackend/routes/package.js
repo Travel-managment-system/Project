@@ -78,6 +78,7 @@ router.get('/places-by-city', async (req, res) => {
       const queryText = `
               SELECT
                   pl.place_id,
+                  c.city_id,
                   pl.name AS place_name,
                   pl.place_desc,
                   pl.image AS place_image,

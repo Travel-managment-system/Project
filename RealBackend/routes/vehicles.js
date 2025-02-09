@@ -36,6 +36,20 @@ router.get('/vehicles/typeBus', async (req, res) => {
 });
 
 
+router.get('/distance', async (req, res) => {
+  const { source, destination } = req.query;
+  const apiKey = '';
+
+  try {
+    const response = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${source}&destinations=${destination}&key=${apiKey}`);
+    const distance = response.data.rows[0].elements[0].distance.value / 1000; // Distance in kilometers
+    res.send({ distance });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to fetch distance' });
+  }
+});
+
+
 router.get('/vehicles/typeAirplane', async (req, res) => {
     try {
         const queryText = 'SELECT * FROM vehicles where type="airplane"';
