@@ -75,7 +75,7 @@ catch(err){
 router.put('/UpdateProfile', async (req, res) => {
   const {
     user_id, phone, dob, marital_status, first_name, last_name,
-    email, password, gender, aadhar_no, passport_no
+    email, gender, aadhar_no, passport_no
   } = req.body;
 
   try {
@@ -84,11 +84,11 @@ router.put('/UpdateProfile', async (req, res) => {
       JOIN user AS u ON pd.user_id = u.user_id
       SET pd.mobile_no = ?, pd.dob = ?, pd.marital_status = ?, 
           pd.gender = ?, pd.aadhar_no = ?, pd.passport_no = ?, 
-          u.first_name = ?, u.last_name = ?, u.email = ?, u.password = ?
+          u.first_name = ?, u.last_name = ?, u.email = ?
       WHERE pd.user_id = ?`;
     const result = await db.query(queryText, [
       phone, dob, marital_status, gender, aadhar_no, passport_no,
-      first_name, last_name, email, password, user_id
+      first_name, last_name, email, user_id
     ]);
     res.send(utils.createSuccess(result));
   } catch (err) {
@@ -96,6 +96,27 @@ router.put('/UpdateProfile', async (req, res) => {
   }
 });
 
+
+
+router.post('/addProfile', async (req, res) => {
+  const {
+    user_id, phone, dob, marital_status, first_name, last_name,
+    email, gender, aadhar_no, passport_no
+  } = req.body;
+
+  try {
+    const queryText = `
+      insert into  personal_details() 
+      WHERE user_id = ?`;
+    const result = await db.query(queryText, [
+      phone, dob, marital_status, gender, aadhar_no, passport_no,
+      first_name, last_name, email, user_id
+    ]);
+    res.send(utils.createSuccess(result));
+  } catch (err) {
+    res.send(utils.createError(err));
+  }
+});
 
 
 
