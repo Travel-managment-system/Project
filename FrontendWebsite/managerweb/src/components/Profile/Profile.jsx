@@ -11,6 +11,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [noPersonalDetails, setNoPersonalDetails] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +25,11 @@ const Profile = () => {
       })
       .then((response) => {
         if (response.data.status === 'success') {
-          setProfile(response.data.data[0]);
+          const profileData = response.data.data[0];
+          setProfile(profileData);
+          if (!profileData.aadhar_no || !profileData.passport_no) {
+            setNoPersonalDetails(true);
+          }
           setLoading(false);
         } else {
           toast.error('Failed to fetch profile: ' + response.data.message);
@@ -43,7 +48,7 @@ const Profile = () => {
   const handleSave = async () => {
     const token = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('userId');
-  
+
     const data = {
       user_id: userId,
       phone: profile.mobile_no,
@@ -56,7 +61,7 @@ const Profile = () => {
       aadhar_no: profile.aadhar_no,
       passport_no: profile.passport_no,
     };
-  
+
     try {
       const response = await axios.put('http://localhost:4000/UpdateProfile', data, {
         headers: { token }
@@ -69,6 +74,31 @@ const Profile = () => {
       }
     } catch (error) {
       toast.error('Error updating profile: ' + error.message);
+    }
+  };
+
+  const handleSavePersonalDetails = async () => {
+    const token = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('userId');
+
+    const data = {
+      user_id: userId,
+      aadhar_no: profile.aadhar_no,
+      passport_no: profile.passport_no,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:4000/PersonalDetails', data, {
+        headers: { token }
+      });
+      if (response.data.status === 'success') {
+        toast.success('Personal details saved successfully!');
+        setNoPersonalDetails(false);
+      } else {
+        toast.error('Failed to save personal details: ' + response.data.message);
+      }
+    } catch (error) {
+      toast.error('Error saving personal details: ' + error.message);
     }
   };
 
@@ -106,7 +136,7 @@ const Profile = () => {
   };
 
   const handleViewBookings = () => {
-    navigate('/bookings');
+    navigate('/booking');
   };
 
   if (loading) {
@@ -116,8 +146,8 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/home')}>
-          Go Back
-        </button>
+        Go Back
+      </button>
       <h3>User Profile</h3>
       {profile ? (
         <div className="card">
@@ -192,7 +222,7 @@ const Profile = () => {
                   onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
                 />
               ) : (
-                <p>{profile.dob}</p>
+                <p>{profile.dob.split('T')[0]}</p>
               )}
             </div>
             <div className="profile-field">
@@ -215,12 +245,32 @@ const Profile = () => {
             <div className="profile-field">
               <FaLock className="icon" />
               <label>Aadhar No:</label>
-              <p>{profile.aadhar_no}</p>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={profile.aadhar_no}
+                  onChange={(e) =>
+                    setProfile({ ...profile, aadhar_no: e.target.value })
+                  }
+                />
+              ) : (
+                <p>{profile.aadhar_no}</p>
+              )}
             </div>
             <div className="profile-field">
               <FaLock className="icon" />
               <label>Passport No:</label>
-              <p>{profile.passport_no}</p>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={profile.passport_no}
+                  onChange={(e) =>
+                    setProfile({ ...profile, passport_no: e.target.value })
+                  }
+                />
+              ) : (
+                <p>{profile.passport_no}</p>
+              )}
             </div>
             <div className="profile-field">
               <label>Marital Status:</label>
@@ -236,6 +286,7 @@ const Profile = () => {
                   <option value="Other">Other</option>
                 </select>
               ) : (
+                
                 <p>{profile.marital_status}</p>
               )}
             </div>
@@ -261,8 +312,12 @@ const Profile = () => {
               <button className="btn-secondary" onClick={handleViewBookings}>
                 <FaListAlt /> View Bookings
               </button>
-            
             </div>
+            {noPersonalDetails && (
+              <button className="btn-add-personal" onClick={handleSavePersonalDetails}>
+                Save Personal Details
+              </button>
+            )}
           </div>
         </div>
       ) : (
