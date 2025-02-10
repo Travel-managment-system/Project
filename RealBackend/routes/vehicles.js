@@ -70,4 +70,63 @@ router.get('/vehicles/typeTrain', async (req, res) => {
         res.send(utils.createError(err));
     }
 });
+
+
+router.post('/manager/vehicles', async (req, res) => {
+    const { unique_no, type, name, cost } = req.body;
+  
+    if (!unique_no || !type || !name || !cost) {
+      return res.status(400).json({ status: 'error', message: 'Unique No, Type, Name, and Cost are required' });
+    }
+  
+    try {
+      const queryText = 'INSERT INTO vehicles (unique_no, type, name, cost) VALUES (?, ?, ?, ?)';
+      const [result] = await db.execute(queryText, [unique_no, type, name, cost]);
+  
+      const newVehicle = {
+        vehicle_id: result.insertId,
+        unique_no,
+        type,
+        name,
+        cost
+      };
+  
+      res.json({ status: 'success', data: newVehicle });
+    } catch (err) {
+      console.error('Error adding vehicle:', err);
+      res.status(500).json({ status: 'error', message: 'An unknown error occurred' });
+    }
+    });
+
+    router.put('/manager/vehicles/:vehicle_id', async (req, res) => {
+        const { vehicle_id } = req.params;
+        const { unique_no, type, name, cost } = req.body;
+      
+        if (!unique_no || !type || !name || !cost) {
+          return res.status(400).json({ status: 'error', message: 'Unique No, Type, Name, and Cost are required' });
+        }
+      
+        try {
+          const queryText = 'UPDATE vehicles SET unique_no = ?, type = ?, name = ?, cost = ? WHERE vehicle_id = ?';
+          const [result] = await db.execute(queryText, [unique_no, type, name, cost, vehicle_id]);
+      
+          if (result.affectedRows > 0) {
+            const updatedVehicle = {
+              vehicle_id,
+              unique_no,
+              type,
+              name,
+              cost
+            };
+            res.json({ status: 'success', data: updatedVehicle });
+          } else {
+            res.status(404).json({ status: 'error', message: 'Vehicle not found' });
+          }
+        } catch (err) {
+          console.error('Error updating vehicle:', err);
+          res.status(500).json({ status: 'error', message: 'An unknown error occurred' });
+        }
+      });
+
 module.exports = router;
+

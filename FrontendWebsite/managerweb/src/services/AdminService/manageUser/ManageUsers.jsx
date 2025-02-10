@@ -113,6 +113,36 @@ const ManageUsers = () => {
   return (
     <div className="manage-users-container">
       <h2>Manage Users</h2>
+      
+      {editingUser && (
+        <div className="edit-user-form">
+          <h3>Edit User</h3>
+          <form>
+            <label>First Name</label>
+            <input
+              type="text"
+              value={formData.first_name}
+              onChange={e => setFormData({ ...formData, first_name: e.target.value })}
+            />
+            <label>Last Name</label>
+            <input
+              type="text"
+              value={formData.last_name}
+              onChange={e => setFormData({ ...formData, last_name: e.target.value })}
+            />
+            <label>Email</label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={e => setFormData({ ...formData, email: e.target.value })}
+            />
+            <div className="form-actions">
+              <button type="button" onClick={handleSaveEdit}>Save</button>
+              <button type="button" onClick={handleCancelEdit}>Cancel</button>
+            </div>
+          </form>
+        </div>
+      )}
       <table className="users-table">
         <thead>
           <tr>
@@ -144,35 +174,6 @@ const ManageUsers = () => {
         </tbody>
       </table>
 
-      {editingUser && (
-        <div className="edit-user-form">
-          <h3>Edit User</h3>
-          <form>
-            <label>First Name</label>
-            <input
-              type="text"
-              value={formData.first_name}
-              onChange={e => setFormData({ ...formData, first_name: e.target.value })}
-            />
-            <label>Last Name</label>
-            <input
-              type="text"
-              value={formData.last_name}
-              onChange={e => setFormData({ ...formData, last_name: e.target.value })}
-            />
-            <label>Email</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={e => setFormData({ ...formData, email: e.target.value })}
-            />
-            <div className="form-actions">
-              <button type="button" onClick={handleSaveEdit}>Save</button>
-              <button type="button" onClick={handleCancelEdit}>Cancel</button>
-            </div>
-          </form>
-        </div>
-      )}
     </div>
   );
 };

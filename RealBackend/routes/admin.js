@@ -245,6 +245,28 @@ router.delete('/bookings/:booking_id', async (req, res) => {
       res.status(500).json({ status: 'error', message: 'An unknown error occurred' });
     }
   });
+
+
+  router.delete('/places/:place_id', async (req, res) => {
+    const { place_id } = req.params;
+  
+    try {
+      const queryText = 'DELETE FROM place WHERE place_id = ?';
+      const [result] = await db.execute(queryText, [place_id]);
+  
+      if (result.affectedRows > 0) {
+        res.json({ status: 'success', message: 'Place deleted successfully' });
+      } else {
+        res.status(404).json({ status: 'error', message: 'Place not found' });
+      }
+    } catch (err) {
+      console.error('Error deleting place:', err);
+      res.status(500).json({ status: 'error', message: 'An unknown error occurred' });
+    }
+  });
+
+
+  
   
 module.exports = router;
 

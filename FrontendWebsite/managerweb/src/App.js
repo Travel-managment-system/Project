@@ -21,13 +21,17 @@ import Booking from "./components/Booking/Booking";
 import AddPersonalDetails from "./components/Profile/AddPersonalDetails/AddPersonalDetails";
 import TravelHistory from "./components/Booking/History/TravelHistory";
 import AdminHome from "./services/AdminService/AdminHome";
-import ManageUsers from "./services/AdminService/managerUser/ManageUsers";
+import ManageUsers from "./services/AdminService/manageUser/ManageUsers";
 import ManageBookings from "./services/AdminService/manageBookings/ManageBookings";
 import ManageHotels from "./services/AdminService/manage-hotels/ManageHotels";
 import ManageVehicles from "./services/AdminService/manage-vehicles/ManageVehicles";
 import ManagePlaces from "./services/AdminService/manage-places/ManagePlaces";
 import ManageCities from "./services/AdminService/manage-cities/ManageCities";
 import ManagerHome from "./services/ManagerService/ManagerHome";
+import ManagerCities from "./services/ManagerService/ManagerCity/ManagerCities";
+import ManagerPlaces from "./services/ManagerService/ManagerPlaces/ManagerPlaces";
+import ManagerHotels from "./services/ManagerService/ManagerHotels/ManagerHotels";
+import ManagerVehicles from "./services/ManagerService/ManagerVehicle/ManagerVehicles";
 // import Footer from "./components/Footer/Footer";
 // import Navbar from "./components/navbar";
 function App() {
@@ -193,6 +197,44 @@ function App() {
               </ProtectedRoute>
           }>
           </Route>
+
+          <Route
+          path="manager-cities"
+          element={
+            <ProtectedRoute>
+              <ManagerCities/>
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manager-places"
+          element={
+            <ProtectedRoute>
+              <ManagerPlaces/>
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manager-hotels"
+          element={
+            <ProtectedRoute>
+              <ManagerHotels/>
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manager-vehicles"
+          element={
+            <ProtectedRoute>
+              <ManagerVehicles/>
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          
         </Routes>
         <ToastContainer />
       </AuthProvider>

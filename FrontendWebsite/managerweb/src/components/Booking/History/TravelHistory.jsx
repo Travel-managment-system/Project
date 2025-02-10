@@ -17,6 +17,7 @@ const TravelHistory = () => {
         params: { user_id: userId }
       })
       .then((response) => {
+        debugger
         setTravelHistory(response.data.data);
         setLoading(false);
       })
@@ -43,11 +44,13 @@ const TravelHistory = () => {
                 <h3>{trip.hotel_name}</h3>
                 <p><strong>Place:</strong> {trip.name}</p>
                 <p><strong>City:</strong> {trip.city_name}</p>
-                <p><strong>Departure Date:</strong> {trip.departure_date}</p>
-                <p><strong>Return Date:</strong> {trip.return_date}</p>
-                <p><strong>Booking Date:</strong> {trip.booking_date}</p>
+                {/* <p><strong>Vehicle:</strong> {trip.name}</p> */}
+                <p><strong>Departure Date:</strong> {trip.departure_date.split('T')[0]}</p>
+                <p><strong>Return Date:</strong> {trip.return_Date.split('T')[0]}</p>
+                <p><strong>Booking Date:</strong> {trip.booking_date.split('T')[0]}</p>
                 <p><strong>People Count:</strong> {trip.count_people}</p>
                 <p><strong>Total Amount:</strong> ${trip.total_amount}</p>
+
               </div>
             ))}
           </div>

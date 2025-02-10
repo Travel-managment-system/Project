@@ -123,6 +123,7 @@ router.get('/bookings/user', async (req, res) => {
     bd.*,
     h.*,
     c.*,
+    
     pl.*
 FROM 
     booking_details bd
