@@ -1,6 +1,7 @@
 /* PlaceDetails.css */
 
 .place-details-container {
+  max-width: 800px;
   padding: 20px;
   text-align: center;
   background-color: #f9f9f9;
@@ -92,7 +93,7 @@ p {
   opacity: 1;
 }
 
-.btn-see-more {
+.btn-see-more  {
   color: white;
   background-color: #ff6347; /* Tomato color */
   border: none;
@@ -104,7 +105,7 @@ p {
 }
 
 .btn-see-more:hover {
-  background-color: #ff4500; /* Darker tomato color */
+  background-color: chocolate; /* Darker tomato color */
 }
 
 .heart-icon {
@@ -124,7 +125,7 @@ p {
 
 .go-back-btn {
   color: white;
-  background-color: #6c757d;
+  background-color: chocolate;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -140,6 +141,7 @@ p {
 }
 
 .btn {
+
   margin-right: 10px;
 }
 

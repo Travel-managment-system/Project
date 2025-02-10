@@ -27,7 +27,8 @@ const Profile = () => {
         if (response.data.status === 'success') {
           const profileData = response.data.data[0];
           setProfile(profileData);
-          if (!profileData.aadhar_no || !profileData.passport_no) {
+          if (!profileData) {
+            // toast.warning("try adding some personal detail")
             setNoPersonalDetails(true);
           }
           setLoading(false);
@@ -36,7 +37,7 @@ const Profile = () => {
         }
       })
       .catch((error) => {
-        toast.error('Error: ' + error.message);
+        toast.error('Error: '+error.message);
         setLoading(false);
       });
   }, []);
@@ -52,7 +53,7 @@ const Profile = () => {
     const data = {
       user_id: userId,
       phone: profile.mobile_no,
-      dob: profile.dob,
+      // dob: profile.dob,
       marital_status: profile.marital_status,
       first_name: profile.first_name,
       last_name: profile.last_name,
@@ -91,6 +92,7 @@ const Profile = () => {
       const response = await axios.post('http://localhost:4000/PersonalDetails', data, {
         headers: { token }
       });
+
       if (response.data.status === 'success') {
         toast.success('Personal details saved successfully!');
         setNoPersonalDetails(false);
@@ -100,6 +102,7 @@ const Profile = () => {
     } catch (error) {
       toast.error('Error saving personal details: ' + error.message);
     }
+    navigate("/profile")
   };
 
   const handleDelete = async () => {
@@ -136,7 +139,7 @@ const Profile = () => {
   };
 
   const handleViewBookings = () => {
-    navigate('/booking');
+    navigate('/travel-history');
   };
 
   if (loading) {
@@ -212,7 +215,7 @@ const Profile = () => {
                 <p>{profile.mobile_no}</p>
               )}
             </div>
-            <div className="profile-field">
+            {/* <div className="profile-field">
               <FaBirthdayCake className="icon" />
               <label>Date of Birth:</label>
               {isEditing ? (
@@ -224,7 +227,7 @@ const Profile = () => {
               ) : (
                 <p>{profile.dob.split('T')[0]}</p>
               )}
-            </div>
+            </div> */}
             <div className="profile-field">
               <label>Gender:</label>
               {isEditing ? (
@@ -275,66 +278,68 @@ const Profile = () => {
             <div className="profile-field">
               <label>Marital Status:</label>
               {isEditing ? (
-                <select
-                  value={profile.marital_status}
-                  onChange={(e) =>
-                    setProfile({ ...profile, marital_status: e.target.value })
-                  }
-                >
-                  <option value="Single">Single</option>
-                  <option value="Married">Married</option>
-                  <option value="Other">Other</option>
-                </select>
-              ) : (
-                
-                <p>{profile.marital_status}</p>
-              )}
-            </div>
-            <div className="profile-buttons">
-              {isEditing ? (
-                <button className="btn-save" onClick={handleSave}>
-                  <FaSave /> Save
-                </button>
-              ) : (
-                <button className="btn-edit" onClick={handleEdit}>
-                  <FaUserEdit /> Edit Profile
-                </button>
-              )}
-              <button className="btn-delete" onClick={() => setShowDeletePopup(true)}>
-                Delete Profile
-              </button>
-              <button className="btn-secondary" onClick={handleLogout}>
-                <FaSignOutAlt /> Logout
-              </button>
-              <button className="btn-secondary" onClick={handleViewWishlist}>
-                <FaHeart /> View Wishlist
-              </button>
-              <button className="btn-secondary" onClick={handleViewBookings}>
-                <FaListAlt /> View Bookings
-              </button>
-            </div>
-            {noPersonalDetails && (
-              <button className="btn-add-personal" onClick={handleSavePersonalDetails}>
-                Save Personal Details
-              </button>
-            )}
-          </div>
-        </div>
-      ) : (
-        <p>Profile not found.</p>
-      )}
-
-      {showDeletePopup && (
-        <div className="delete-popup">
-          <div className="delete-popup-content">
-            <p>Are you sure you want to delete your account?</p>
-            <button className="btn-confirm" onClick={handleDelete}>Yes</button>
-            <button className="btn-cancel" onClick={() => setShowDeletePopup(false)}>No</button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Profile;
+                                <select
+                                value={profile.marital_status}
+                                onChange={(e) =>
+                                  setProfile({ ...profile, marital_status: e.target.value })
+                                }
+                              >
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Other">Other</option>
+                              </select>
+                            ) : (
+                              <p>{profile.marital_status}</p>
+                            )}
+                          </div>
+                          <div className="profile-buttons">
+                            {isEditing ? (
+                              <button className="btn-save" onClick={handleSave}>
+                                <FaSave /> Save
+                              </button>
+                            ) : (
+                              <button className="btn-edit" onClick={handleEdit}>
+                                <FaUserEdit /> Edit Profile
+                              </button>
+                            )}
+                            <button className="btn-delete" onClick={() => setShowDeletePopup(true)}>
+                              Delete Profile
+                            </button>
+                            <button className="btn-secondary" onClick={handleLogout}>
+                              <FaSignOutAlt /> Logout
+                            </button>
+                            <button className="btn-secondary" onClick={handleViewWishlist}>
+                              <FaHeart /> View Wishlist
+                            </button>
+                            <button className="btn-secondary" onClick={handleViewBookings}>
+                              <FaListAlt /> Travel History
+                            </button>
+                          </div>
+                          {noPersonalDetails && (
+                            <button className="btn-add-personal" onClick={handleSavePersonalDetails}>
+                              Save Personal Details
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ) : (<>
+                      <p>Profile not found. Try adding personal details</p>
+                      <button className='btn-add-personal' onClick={navigate('/addPersonalDetails')}></button>
+                      </>
+                    )}
+              
+                    {showDeletePopup && (
+                      <div className="delete-popup">
+                        <div className="delete-popup-content">
+                          <p>Are you sure you want to delete your account?</p>
+                          <button className="btn-confirm" onClick={handleDelete}>Yes</button>
+                          <button className="btn-cancel" onClick={() => setShowDeletePopup(false)}>No</button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              };
+              
+              export default Profile;
+              

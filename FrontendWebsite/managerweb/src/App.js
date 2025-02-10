@@ -16,6 +16,18 @@ import PlaceDetails from "./components/Packages/PlaceDetails/PlaceDetails";
 import Wishlist from "./components/Packages/wishlist/Wishlist";
 import SearchCity from "./components/Home/SearchCity/SearchCity";
 import Register from "./pages/Register/register";
+import BookingComponent from "./components/Booking/Booking";
+import Booking from "./components/Booking/Booking";
+import AddPersonalDetails from "./components/Profile/AddPersonalDetails/AddPersonalDetails";
+import TravelHistory from "./components/Booking/History/TravelHistory";
+import AdminHome from "./services/AdminService/AdminHome";
+import ManageUsers from "./services/AdminService/managerUser/ManageUsers";
+import ManageBookings from "./services/AdminService/manageBookings/ManageBookings";
+import ManageHotels from "./services/AdminService/manage-hotels/ManageHotels";
+import ManageVehicles from "./services/AdminService/manage-vehicles/ManageVehicles";
+import ManagePlaces from "./services/AdminService/manage-places/ManagePlaces";
+import ManageCities from "./services/AdminService/manage-cities/ManageCities";
+import ManagerHome from "./services/ManagerService/ManagerHome";
 // import Footer from "./components/Footer/Footer";
 // import Navbar from "./components/navbar";
 function App() {
@@ -36,6 +48,25 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/booking"
+            element={
+              <ProtectedRoute>
+                <Booking></Booking>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/addPersonalDetails"
+            element={
+              <ProtectedRoute>
+                <AddPersonalDetails></AddPersonalDetails>
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/create-packages"
             element={
@@ -52,6 +83,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
 
           <Route
             path="/profile"
@@ -74,8 +106,14 @@ function App() {
             }
           />
 
-         
-
+          <Route
+            path="/travel-history"
+            element={
+              <ProtectedRoute>
+                <TravelHistory />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/wishlist"
             element={
@@ -84,6 +122,77 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+
+          <Route
+          path="admin/home"
+          element={
+            <ProtectedRoute>
+              <AdminHome />
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manage-users"
+          element={
+            <ProtectedRoute>
+              <ManageUsers />
+              </ProtectedRoute>
+          }>
+          </Route>
+          <Route
+          path="manage-bookings"
+          element={
+            <ProtectedRoute>
+              <ManageBookings />
+              </ProtectedRoute>
+          }>
+          </Route>
+          <Route
+          path="manage-hotels"
+          element={
+            <ProtectedRoute>
+              <ManageHotels />
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manage-vehicles"
+          element={
+            <ProtectedRoute>
+              <ManageVehicles />
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manage-places"
+          element={
+            <ProtectedRoute>
+              <ManagePlaces />
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manage-cities"
+          element={
+            <ProtectedRoute>
+              <ManageCities />
+              </ProtectedRoute>
+          }>
+          </Route>
+
+          <Route
+          path="manager/home"
+          element={
+            <ProtectedRoute>
+              <ManagerHome />
+              </ProtectedRoute>
+          }>
+          </Route>
         </Routes>
         <ToastContainer />
       </AuthProvider>

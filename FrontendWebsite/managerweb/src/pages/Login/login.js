@@ -24,9 +24,14 @@ const Login = () => {
 
           navigate('/home', { state: { role } });
         if(role==='manager'){
-          navigate('/manager-home', { state: { role } });
+          navigate('/manager/home', { state: { role } });
 
         }
+        if(role==='admin'){
+          navigate('/admin/home', { state: { role } });
+
+        }
+        
         } else {
           debugger
           console.log("object failed"+response.data.error)

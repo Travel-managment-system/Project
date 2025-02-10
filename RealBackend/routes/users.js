@@ -74,7 +74,7 @@ catch(err){
 //update user information 
 router.put('/UpdateProfile', async (req, res) => {
   const {
-    user_id, phone, dob, marital_status, first_name, last_name,
+    user_id, phone, marital_status, first_name, last_name,
     email, gender, aadhar_no, passport_no
   } = req.body;
 
@@ -82,12 +82,12 @@ router.put('/UpdateProfile', async (req, res) => {
     const queryText = `
       UPDATE personal_details AS pd
       JOIN user AS u ON pd.user_id = u.user_id
-      SET pd.mobile_no = ?, pd.dob = ?, pd.marital_status = ?, 
+      SET pd.mobile_no = ?,  pd.marital_status = ?, 
           pd.gender = ?, pd.aadhar_no = ?, pd.passport_no = ?, 
           u.first_name = ?, u.last_name = ?, u.email = ?
       WHERE pd.user_id = ?`;
     const result = await db.query(queryText, [
-      phone, dob, marital_status, gender, aadhar_no, passport_no,
+      phone, marital_status, gender, aadhar_no, passport_no,
       first_name, last_name, email, user_id
     ]);
     res.send(utils.createSuccess(result));
@@ -97,28 +97,34 @@ router.put('/UpdateProfile', async (req, res) => {
 });
 
 
-
-router.post('/addProfile', async (req, res) => {
-  const {
-    user_id, phone, dob, marital_status, first_name, last_name,
-    email, gender, aadhar_no, passport_no
+router.post('/AddPersonalDetails', (req, res) => {
+  let {
+    user_id, mobile_no, dob, gender, marital_status, aadhar_no, passport_no
   } = req.body;
 
-  try {
-    const queryText = `
-      insert into  personal_details() 
-      WHERE user_id = ?`;
-    const result = await db.query(queryText, [
-      phone, dob, marital_status, gender, aadhar_no, passport_no,
-      first_name, last_name, email, user_id
-    ]);
-    res.send(utils.createSuccess(result));
-  } catch (err) {
-    res.send(utils.createError(err));
-  }
+  const query = `
+    INSERT INTO personal_details (user_id, mobile_no, dob, gender, marital_status, aadhar_no, passport_no)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE
+      mobile_no = VALUES(mobile_no),
+      dob = VALUES(dob),
+      gender = VALUES(gender),
+      marital_status = VALUES(marital_status),
+      aadhar_no = VALUES(aadhar_no),
+      passport_no = VALUES(passport_no)
+  `;
+
+  db.query(query, [user_id, mobile_no, dob, gender, marital_status, aadhar_no, passport_no
+  ], (err, result) => {
+    if (err) {
+      console.error('Error adding profile details:', err);
+      res.status(500).json({ status: 'error', message: 'Error adding profile details' });
+      return;
+    }
+    
+    res.json({ status: 'success', message: 'Profile details added/updated successfully' });
+  });
 });
-
-
 
 
 

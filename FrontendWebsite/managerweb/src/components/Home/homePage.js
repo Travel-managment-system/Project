@@ -24,6 +24,7 @@ const HomePage = () => {
 sessionStorage.removeItem('placeId')
 sessionStorage.removeItem('cityId')
 sessionStorage.removeItem('cityName')
+sessionStorage.removeItem('hotelId')
  
 
   const handleSearch = () => {

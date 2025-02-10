@@ -6,13 +6,25 @@ const utils = require('../utils');
 // // See all packages
 router.get('/hotels', async (req, res) => {
     try {
-        const queryText = 'SELECT * FROM hotels';
+        const queryText = 'SELECT * FROM hotels,city where hotels.city_id = city.city_id ';
         const [hotels] = await db.execute(queryText);
         res.send(utils.createSuccess(hotels));
     } catch (err) {
         res.send(utils.createError(err));
     }
 });
+
+router.get('/hotel/:hotel_id', async (req, res) => {
+    try {
+        const hotelId = req.params.hotel_id;
+        const queryText = 'SELECT * FROM hotels WHERE hotel_id=?';
+        const [hotel] = await db.execute(queryText, [hotelId]);
+        
+            res.send(utils.createSuccess(hotel))
+    } catch (err) {
+        res.send(utils.createError(err));
+    }   
+    });
 
 router.get('/hotels/city/:city_id', async (req, res) => {
     try {

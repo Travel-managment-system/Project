@@ -6,11 +6,12 @@ import { toast } from 'react-toastify';
 const HotelsByCity = () => {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
-const cityName = sessionStorage.getItem('cityName')
-  const handleHotelBooking =(hotelId)=>{
-console.log(hotelId)
-toast.success('hotel added to the cart')
-  }
+  const cityName = sessionStorage.getItem('cityName');
+  
+  const handleHotelBooking = (hotelId) => {
+   sessionStorage.setItem("hotelId", hotelId);
+    toast.success('Hotel added to the cart'+ hotelId);
+  };
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
@@ -23,7 +24,6 @@ toast.success('hotel added to the cart')
       .then((response) => {
         if (response.data.status === 'success') {
           setHotels(response.data.data);
-          console.log(response.data.data)
           setLoading(false);
         } else {
           console.log(response.data.message);
@@ -41,7 +41,11 @@ toast.success('hotel added to the cart')
 
   return (
     <div className="hotels-container">
-      <h2>Hotels in Your Selected {cityName}</h2>
+      <h2>
+       { (cityName===null?(<>
+        Near by Hotels
+        </>):( <>Hotels in {cityName}</>))}
+       </h2>
       {hotels.length > 0 ? (
         <div className="hotels-grid">
           {hotels.map((hotel, index) => (

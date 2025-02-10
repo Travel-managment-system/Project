@@ -7,39 +7,33 @@ import './PlaceDetails.css'; // Import the CSS file for styling
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { toast } from 'react-toastify';
-import Hotels from '../../Hotels/Hotels';
-import HotelsByCity from '../../Hotels/HotelsByCity';
+import HotelsByCity from '../../Hotels/HotelsByCity'; // Import the HotelsByCity component
 import WeatherComponent from './Weather/WeatherComponent';
-// import './../../../App.css'
+
 const PlaceDetails = () => {
   const { place_id } = useParams();
-  const cityName=sessionStorage.getItem('cityName')
-  const cityId=sessionStorage.getItem('cityId')
-  
   const [placeDetails, setPlaceDetails] = useState(null);
   const [otherPlaces, setOtherPlaces] = useState([]);
+  const [cart, setCart] = useState([]);
   const token = sessionStorage.getItem('token');
-  const userId = sessionStorage.getItem('userId'); // Retrieve user ID from session storage
+  const userId = sessionStorage.getItem('userId');
+  
   const navigate = useNavigate();
-  console.log(userId);
 
   useEffect(() => {
     axios
       .get(`http://localhost:4000/places/${place_id}`, { headers: { token } })
       .then((result) => {
         const place = result.data.data;
-        const cityId= place.city_id;
-        sessionStorage.setItem('cityId',cityId)
-        // const cityId=result.data.data.city_id;
+
+        const cityId = place.city_id;
+        debugger
+        sessionStorage.setItem('cityId', cityId);
         setPlaceDetails(place);
-// debugger
-        // Fetch other places in the same city
-        return axios.get(`http://localhost:4000/places/city/${cityId}`, { headers: { token }});
+        return axios.get(`http://localhost:4000/places/city/${cityId}`, { headers: { token } });
       })
       .then((result) => {
         const places = result.data.data;
-        debugger
-        sessionStorage.setItem('cityName',places[0].city_name)
         setOtherPlaces(places);
       })
       .catch((error) => {
@@ -52,14 +46,12 @@ const PlaceDetails = () => {
   };
 
   const handleAddToWishlist = (placeId) => {
-    const token = sessionStorage.getItem('token'); // Retrieve the token from session storage
-// sessionStorage.removeItem('placeId')
     if (userId && placeId && token) {
       axios
         .post(
           `http://localhost:4000/wishlist`,
           { user_id: userId, place_id: placeId },
-          { headers: { token } } // Set the Authorization header
+          { headers: { token } }
         )
         .then((response) => {
           toast.success('Added to wishlist');
@@ -71,6 +63,11 @@ const PlaceDetails = () => {
     } else {
       console.error('User ID, Place ID, or Token is undefined');
     }
+  };
+
+  const handleAddToCart = (type, id) => {
+    setCart([...cart, { type, id }]);
+    toast.success(`${type.charAt(0).toUpperCase() + type.slice(1)} added to cart`);
   };
 
   if (!placeDetails) {
@@ -93,31 +90,34 @@ const PlaceDetails = () => {
         <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/home')}>
           Go Back
         </button>
-        <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/bookings')}>
-         Booking details
+        <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/booking')}>
+         Cart
         </button>
         <button className="btn btn-secondary go-back-btn" onClick={() => navigate('/wishlist')}>
          See wishlist
         </button>
       </div>
-      <div className="place-details-container">
-       
+      < div className="place-details-container">
         <h1>{placeDetails.name}</h1>
         <img src={`http://localhost:4000/${placeDetails.image}`} alt={placeDetails.name} className="place-image" />
 
-
         <p>{placeDetails.place_desc}</p>
-        <button className='book-place-btn' >add to package</button>
-        <p>or</p>
-        <div className='fav-div'>
-        <FaHeart className="heart-icon" onClick={() => handleAddToWishlist(placeDetails.place_id)} />
-        </div>
-        
-        {/* <WeatherComponent></WeatherComponent> */}
-        <div>weather component</div>
-        <HotelsByCity></HotelsByCity>
+       
+          <button className="btn btn-secondary go-back-btn" onClick={() => handleAddToWishlist(placeDetails.place_id)} >Add to wishlist</button>
+        <button className="btn btn-secondary go-back-btn" onClick={() => {
+          handleAddToCart('place', { place_id: placeDetails.place_id, city_id: placeDetails.city_id });
+          sessionStorage.setItem('placeId', placeDetails.place_id);
+          sessionStorage.setItem('cityId', placeDetails.city_id);
+        }}>
+          Add to Package
+        </button>
+</div>
+<div>
+        {/* <WeatherComponent /> */}
+        <HotelsByCity onAddToCart={handleAddToCart} /> {/* Pass the handleAddToCart function to HotelsByCity */}
+        {/* <Vehicles></Vehicles> */}
         <div className="other-places-section">
-          <h2>Other Places to Visit in the {cityName}</h2>
+          <h2>Other Places to Visit in the City</h2>
           {otherPlaces.length > 0 ? (
             <Slider {...settings}>
               {otherPlaces.map((place) => (
@@ -126,6 +126,13 @@ const PlaceDetails = () => {
                   <div className="overlay">
                     <button className="btn-see-more" onClick={() => handleSeeMore(place.place_id)}>
                       See More
+                    </button>
+                    <button className="btn" onClick={() => {
+                      handleAddToCart('place', { place_id: place.place_id, city_id: place.city_id });
+                      sessionStorage.setItem('placeId', place.place_id);
+                      sessionStorage.setItem('cityId', place.city_id);
+                    }}>
+                      Add to Package
                     </button>
                     <FaHeart className="heart-icon" onClick={() => handleAddToWishlist(place.place_id)} />
                   </div>
@@ -138,7 +145,6 @@ const PlaceDetails = () => {
             <p>No other places found in the city.</p>
           )}
         </div>
-        {/* <Hotels></Hotels> */}
       </div>
     </>
   );
