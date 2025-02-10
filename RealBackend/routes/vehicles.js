@@ -71,7 +71,7 @@ router.get('/vehicles/typeTrain', async (req, res) => {
     }
 });
 
-
+// /add vehicles
 router.post('/manager/vehicles', async (req, res) => {
     const { unique_no, type, name, cost } = req.body;
   
@@ -97,7 +97,7 @@ router.post('/manager/vehicles', async (req, res) => {
       res.status(500).json({ status: 'error', message: 'An unknown error occurred' });
     }
     });
-
+//edit vehicle details 
     router.put('/manager/vehicles/:vehicle_id', async (req, res) => {
         const { vehicle_id } = req.params;
         const { unique_no, type, name, cost } = req.body;

@@ -113,7 +113,7 @@ const PlaceDetails = () => {
         </button>
 </div>
 <div>
-        {/* <WeatherComponent /> */}
+        <WeatherComponent />
         <HotelsByCity onAddToCart={handleAddToCart} /> {/* Pass the handleAddToCart function to HotelsByCity */}
         {/* <Vehicles></Vehicles> */}
         <div className="other-places-section">
