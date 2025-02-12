@@ -11,7 +11,7 @@ const Flights = () => {
     useEffect(() => {
         console.log("object")
         
-            axios.get('https://project-ivory-eta.vercel.app/typeAirplane', {headers: {
+            axios.get('http://localhost:4000/vehicles/typeAirplane', {headers: {
                 token
             }})
             .then(result => {
