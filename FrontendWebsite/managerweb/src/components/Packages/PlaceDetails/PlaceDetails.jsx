@@ -29,11 +29,13 @@ const PlaceDetails = () => {
         const cityId = place.city_id;
         debugger
         sessionStorage.setItem('cityId', cityId);
+
         setPlaceDetails(place);
         return axios.get(`http://localhost:4000/places/city/${cityId}`, { headers: { token } });
       })
       .then((result) => {
         const places = result.data.data;
+        
         setOtherPlaces(places);
       })
       .catch((error) => {

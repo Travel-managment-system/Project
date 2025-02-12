@@ -21,7 +21,7 @@ const Places = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/places', { headers: {token}})
+      .get('https://project-ivory-eta.vercel.app/places', { headers: {token}})
       .then((result) => {
         setPackages(result.data.data || []);
         debugger

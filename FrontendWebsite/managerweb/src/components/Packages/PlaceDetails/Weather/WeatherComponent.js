@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Weather.css'
 const WeatherComponent = () => {
-  const cityName = sessionStorage.getItem('cityName');
-  const city=cityName
+  // const cityName = sessionStorage.getItem('cityName');
+  const city='mumbai'
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
 //smoke , light rain , light intensity drizzle, few clouds,
